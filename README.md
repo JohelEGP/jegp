@@ -1,6 +1,10 @@
 # jegp
 Generic library components for my C++ projects.
 
+This project uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
+
+The public API is the following synopsis.
+
 ## Header "utility.hpp" synopsis
 
 ```C++
