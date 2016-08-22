@@ -1,11 +1,20 @@
 # jegp
+
 Generic library components for my C++ projects.
+
+## Dependencies
+
+* A partial implementation of the upcoming standard following C++14
+    - Variable type traits
+
+## Specification
 
 This project uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
 
-The public API is the following specification.
+This specification is the public API.
 
-## Header "utility.hpp" synopsis
+### Header `<jegp/utility.hpp>` synopsis
+
 ```C++
 namespace jegp {
 
@@ -15,8 +24,10 @@ constexpr auto underlying_value(Enum e) noexcept;
 } // jegp namespace
 ```
 
-### underlying_value
+#### `underlying_value`
+
 Casts an enumeration value to its underlying type.
+
 ```C++
 template <class Enum>
 constexpr auto underlying_value(Enum e) noexcept;
