@@ -12,7 +12,7 @@ Generic library components for my C++ projects.
 
 ## Specification
 
-This project uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html).
+This project uses [Semantic Versioning 2.0.0](http://semver.org/).
 
 This specification is the public API.
 
@@ -154,4 +154,4 @@ Returns: `const_cast<pointer>(Base::data())`.
 ```C++
 constexpr String_view substr(size_type pos = 0, size_type n = npos) const;
 ```
-Returns: A string view that equals `Base{*this}.substr(pos,n)`.
+Returns: A string view that equals `Base::substr(pos,n)`.
