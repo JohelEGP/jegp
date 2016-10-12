@@ -11,12 +11,12 @@ class String_view : public std::experimental::string_view {
 
     constexpr String_view(Base) noexcept;
 public:
+    using iterator = pointer;
+    using reverse_iterator = std::reverse_iterator<iterator>;
+
     constexpr String_view() noexcept = default;
     constexpr String_view(char* str);
     constexpr String_view(char* str, size_type len);
-
-    using iterator = pointer;
-    using reverse_iterator = std::reverse_iterator<iterator>;
 
     using Base::begin;
     using Base::end;
