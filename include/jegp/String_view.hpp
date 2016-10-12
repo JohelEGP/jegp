@@ -1,22 +1,29 @@
 #ifndef JEGP_STRING_VIEW_HPP
 #define JEGP_STRING_VIEW_HPP
 
-#include <iterator>
+#include <string>   // char_traits
+#include <iterator> // reverse_iterator
 #include <experimental/string_view>
 
 namespace jegp {
 
-class String_view : public std::experimental::string_view {
-    using Base = std::experimental::string_view;
+template <class charT, class traits = std::char_traits<charT>>
+class Basic_string_view
+  : public std::experimental::basic_string_view<charT,traits> {
+private:
+    using Base = std::experimental::basic_string_view<charT,traits>;
 
-    constexpr String_view(Base) noexcept;
+    constexpr Basic_string_view(Base) noexcept;
 public:
+    using typename Base::pointer;
+    using typename Base::reference;
     using iterator = pointer;
     using reverse_iterator = std::reverse_iterator<iterator>;
+    using typename Base::size_type;
 
-    constexpr String_view() noexcept = default;
-    constexpr String_view(char* str);
-    constexpr String_view(char* str, size_type len);
+    constexpr Basic_string_view() noexcept = default;
+    constexpr Basic_string_view(charT* str);
+    constexpr Basic_string_view(charT* str, size_type len);
 
     using Base::begin;
     using Base::end;
@@ -41,8 +48,14 @@ public:
     using Base::data;
     constexpr pointer data() noexcept;
 
-    constexpr String_view substr(size_type pos = 0, size_type n = npos) const;
+    constexpr Basic_string_view substr(
+        size_type pos = 0, size_type n = Base::npos) const;
 };
+
+using    String_view = Basic_string_view<char>;
+using u16String_view = Basic_string_view<char16_t>;
+using u32String_view = Basic_string_view<char32_t>;
+using   wString_view = Basic_string_view<wchar_t>;
 
 } // jegp namespace
 
@@ -52,70 +65,85 @@ public:
 
 namespace jegp {
 
-constexpr String_view::String_view(Base b) noexcept
-  : std::experimental::string_view{b}
+template <class C, class T>
+constexpr Basic_string_view<C,T>::Basic_string_view(Base b) noexcept
+  : Base{b}
 {
 }
 
 // Construction ----------------------------------------------------------------
 
-constexpr String_view::String_view(char* str)
-  : std::experimental::string_view{str}
+template <class charT, class T>
+constexpr Basic_string_view<charT,T>::Basic_string_view(charT* str)
+  : Base{str}
 {
 }
-constexpr String_view::String_view(char* str, size_type len)
-  : std::experimental::string_view{str,len}
+template <class charT, class T>
+constexpr Basic_string_view<charT,T>::Basic_string_view(
+    charT* str, size_type len)
+  : Base{str,len}
 {
 }
 
 // Iterator support ------------------------------------------------------------
 
-constexpr auto String_view::begin() noexcept -> iterator
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::begin() noexcept -> iterator
 {
     return data();
 }
-constexpr auto String_view::end() noexcept -> iterator
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::end() noexcept -> iterator
 {
-    return begin() + size();
+    return begin() + Base::size();
 }
 
-inline /*constexpr*/ auto String_view::rbegin() noexcept -> reverse_iterator
+template <class C, class T>
+/*constexpr*/ auto Basic_string_view<C,T>::rbegin() noexcept -> reverse_iterator
 {
     return reverse_iterator{end()};
 }
-inline /*constexpr*/ auto String_view::rend() noexcept -> reverse_iterator
+template <class C, class T>
+/*constexpr*/ auto Basic_string_view<C,T>::rend() noexcept -> reverse_iterator
 {
     return reverse_iterator{begin()};
 }
 
 // Element access --------------------------------------------------------------
 
-constexpr auto String_view::operator[](size_type pos) -> reference
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::operator[](size_type pos) -> reference
 {
     return const_cast<reference>(Base::operator[](pos));
 }
-constexpr auto String_view::at(size_type pos) -> reference
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::at(size_type pos) -> reference
 {
     return const_cast<reference>(Base::at(pos));
 }
 
-constexpr auto String_view::front() -> reference
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::front() -> reference
 {
     return const_cast<reference>(Base::front());
 }
-constexpr auto String_view::back() -> reference
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::back() -> reference
 {
     return const_cast<reference>(Base::back());
 }
 
-constexpr auto String_view::data() noexcept -> pointer
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::data() noexcept -> pointer
 {
     return const_cast<pointer>(Base::data());
 }
 
 // String operations -----------------------------------------------------------
 
-constexpr String_view String_view::substr(size_type pos, size_type n) const
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::substr(size_type pos, size_type n) const
+    -> Basic_string_view
 {
     return Base::substr(pos,n);
 }

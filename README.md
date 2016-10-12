@@ -45,25 +45,38 @@ Remarks: This function shall not participate in overload resolution unless `std:
 
 namespace jegp {
 
-class String_view;
+template <class charT, class traits = std::char_traits<charT>>
+class Basic_string_view;
+
+using    String_view = Basic_string_view<char>;
+using u16String_view = Basic_string_view<char16_t>;
+using u32String_view = Basic_string_view<char32_t>;
+using   wString_view = Basic_string_view<wchar_t>;
 
 } // jegp namespace
 ```
 
-#### 2.1 Class `String_view`
+#### 2.1 Class template `Basic_string_view`
 
-A mutable string view.
+Describes a mutable string view.
 
 ```C++
-class String_view : public std::experimental::string_view {
-    using Base = std::experimental::string_view; // exposition only
+template <class charT, class traits = std::char_traits<charT>>
+class Basic_string_view
+  : public std::experimental::basic_string_view<charT,traits> {
+private:
+    using Base =
+        std::experimental::basic_string_view<charT,traits>; // exposition only
 public:
+    using typename Base::pointer;
+    using typename Base::reference;
     using iterator = pointer;
     using reverse_iterator = std::reverse_iterator<iterator>;
+    using typename Base::size_type;
 
-    constexpr String_view() noexcept = default;
-    constexpr String_view(char* str);
-    constexpr String_view(char* str, size_type len);
+    constexpr Basic_string_view() noexcept = default;
+    constexpr Basic_string_view(charT* str);
+    constexpr Basic_string_view(charT* str, size_type len);
 
     using Base::begin;
     using Base::end;
@@ -88,15 +101,16 @@ public:
     using Base::data;
     constexpr pointer data() noexcept;
 
-    constexpr String_view substr(size_type pos = 0, size_type n = npos) const;
+    constexpr Basic_string_view substr(
+        size_type pos = 0, size_type n = Base::npos) const;
 };
 ```
 
 ##### 2.1.1 Construction
 
 ```C++
-constexpr String_view(char* str);
-constexpr String_view(char* str, size_type len);
+constexpr Basic_string_view(charT* str);
+constexpr Basic_string_view(charT* str, size_type len);
 ```
 Effects: Initializes the base with the same argument list.
 
@@ -110,7 +124,7 @@ Returns: `data()`.
 ```C++
 constexpr iterator end() noexcept;
 ```
-Returns: `begin() + size()`.
+Returns: `begin() + Base::size()`.
 
 ```C++
 reverse_iterator rbegin() noexcept;
@@ -152,6 +166,7 @@ Returns: `const_cast<pointer>(Base::data())`.
 ##### 2.1.4 String operations
 
 ```C++
-constexpr String_view substr(size_type pos = 0, size_type n = npos) const;
+constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)
+    const;
 ```
 Returns: A string view that equals the value of `Base::substr(pos,n)`.
