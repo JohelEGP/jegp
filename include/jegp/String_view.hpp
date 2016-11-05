@@ -32,8 +32,8 @@ public:
 
     using Base::rbegin;
     using Base::rend;
-    /*constexpr*/ reverse_iterator rbegin() noexcept;
-    /*constexpr*/ reverse_iterator rend() noexcept;
+    constexpr reverse_iterator rbegin() noexcept;
+    constexpr reverse_iterator rend() noexcept;
 
     using Base::operator[];
     using Base::at;
@@ -99,12 +99,12 @@ constexpr auto Basic_string_view<C,T>::end() noexcept -> iterator
 }
 
 template <class C, class T>
-/*constexpr*/ auto Basic_string_view<C,T>::rbegin() noexcept -> reverse_iterator
+constexpr auto Basic_string_view<C,T>::rbegin() noexcept -> reverse_iterator
 {
     return reverse_iterator{end()};
 }
 template <class C, class T>
-/*constexpr*/ auto Basic_string_view<C,T>::rend() noexcept -> reverse_iterator
+constexpr auto Basic_string_view<C,T>::rend() noexcept -> reverse_iterator
 {
     return reverse_iterator{begin()};
 }

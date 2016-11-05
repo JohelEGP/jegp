@@ -85,8 +85,8 @@ public:
 
     using Base::rbegin;
     using Base::rend;
-    reverse_iterator rbegin() noexcept;
-    reverse_iterator rend() noexcept;
+    constexpr reverse_iterator rbegin() noexcept;
+    constexpr reverse_iterator rend() noexcept;
 
     using Base::operator[];
     using Base::at;
@@ -127,12 +127,12 @@ constexpr iterator end() noexcept;
 Returns: `begin() + Base::size()`.
 
 ```C++
-reverse_iterator rbegin() noexcept;
+constexpr reverse_iterator rbegin() noexcept;
 ```
 Returns: `reverse_iterator{end()}`.
 
 ```C++
-reverse_iterator rend() noexcept;
+constexpr reverse_iterator rend() noexcept;
 ```
 Returns: `reverse_iterator{begin()}`.
 
