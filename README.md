@@ -66,36 +66,33 @@ private:
 public:
     using typename Base::pointer;
     using typename Base::reference;
-    using iterator = pointer;
-    using reverse_iterator = std::reverse_iterator<iterator>;
+    using iterator               = pointer;
+    using const_iterator         = iterator;
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = reverse_iterator;
     using typename Base::size_type;
 
     constexpr Basic_string_view() noexcept = default;
     constexpr Basic_string_view(charT* str);
     constexpr Basic_string_view(charT* str, size_type len);
 
-    using Base::begin;
-    using Base::end;
-    constexpr iterator begin() noexcept;
-    constexpr iterator end() noexcept;
+    constexpr iterator begin() const noexcept;
+    constexpr iterator end() const noexcept;
+    constexpr iterator cbegin() const noexcept;
+    constexpr iterator cend() const noexcept;
 
-    using Base::rbegin;
-    using Base::rend;
-    constexpr reverse_iterator rbegin() noexcept;
-    constexpr reverse_iterator rend() noexcept;
+    constexpr reverse_iterator rbegin() const noexcept;
+    constexpr reverse_iterator rend() const noexcept;
+    constexpr reverse_iterator crbegin() const noexcept;
+    constexpr reverse_iterator crend() const noexcept;
 
-    using Base::operator[];
-    using Base::at;
-    constexpr reference operator[](size_type pos);
-    constexpr reference at(size_type pos);
+    constexpr reference operator[](size_type pos) const;
+    constexpr reference at(size_type pos) const;
 
-    using Base::front;
-    using Base::back;
-    constexpr reference front();
-    constexpr reference back();
+    constexpr reference front() const;
+    constexpr reference back() const;
 
-    using Base::data;
-    constexpr pointer data() noexcept;
+    constexpr pointer data() const noexcept;
 
     constexpr Basic_string_view substr(
         size_type pos = 0, size_type n = Base::npos) const;
@@ -113,49 +110,53 @@ Effects: Initializes the base with the same argument list.
 ##### 2.1.2 Iterator support
 
 ```C++
-constexpr iterator begin() noexcept;
+constexpr iterator begin() const noexcept;
+constexpr iterator cbegin() const noexcept;
 ```
 Returns: `data()`.
 
 ```C++
-constexpr iterator end() noexcept;
+constexpr iterator end() const noexcept;
+constexpr iterator cend() const noexcept;
 ```
 Returns: `begin() + Base::size()`.
 
 ```C++
-constexpr reverse_iterator rbegin() noexcept;
+constexpr reverse_iterator rbegin() const noexcept;
+constexpr reverse_iterator crbegin() const noexcept;
 ```
 Returns: `reverse_iterator{end()}`.
 
 ```C++
-constexpr reverse_iterator rend() noexcept;
+constexpr reverse_iterator rend() const noexcept;
+constexpr reverse_iterator crend() const noexcept;
 ```
 Returns: `reverse_iterator{begin()}`.
 
 ##### 2.1.3 Element access
 
 ```C++
-constexpr reference operator[](size_type pos);
+constexpr reference operator[](size_type pos) const;
 ```
 Effects: Equivalent to `return const_cast<reference>(Base::operator[](pos));`.
 
 ```C++
-constexpr reference at(size_type pos);
+constexpr reference at(size_type pos) const;
 ```
 Effects: Equivalent to `return const_cast<reference>(Base::at(pos));`.
 
 ```C++
-constexpr reference front();
+constexpr reference front() const;
 ```
 Effects: Equivalent to `return const_cast<reference>(Base::front());`.
 
 ```C++
-constexpr reference back();
+constexpr reference back() const;
 ```
 Effects: Equivalent to `return const_cast<reference>(Base::back());`.
 
 ```C++
-constexpr pointer data() noexcept;
+constexpr pointer data() const noexcept;
 ```
 Returns: `const_cast<pointer>(Base::data())`.
 

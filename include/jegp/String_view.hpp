@@ -16,36 +16,33 @@ private:
 public:
     using typename Base::pointer;
     using typename Base::reference;
-    using iterator = pointer;
-    using reverse_iterator = std::reverse_iterator<iterator>;
+    using iterator               = pointer;
+    using const_iterator         = iterator;
+    using reverse_iterator       = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = reverse_iterator;
     using typename Base::size_type;
 
     constexpr Basic_string_view() noexcept = default;
     constexpr Basic_string_view(charT* str);
     constexpr Basic_string_view(charT* str, size_type len);
 
-    using Base::begin;
-    using Base::end;
-    constexpr iterator begin() noexcept;
-    constexpr iterator end() noexcept;
+    constexpr iterator begin() const noexcept;
+    constexpr iterator end() const noexcept;
+    constexpr iterator cbegin() const noexcept;
+    constexpr iterator cend() const noexcept;
 
-    using Base::rbegin;
-    using Base::rend;
-    constexpr reverse_iterator rbegin() noexcept;
-    constexpr reverse_iterator rend() noexcept;
+    constexpr reverse_iterator rbegin() const noexcept;
+    constexpr reverse_iterator rend() const noexcept;
+    constexpr reverse_iterator crbegin() const noexcept;
+    constexpr reverse_iterator crend() const noexcept;
 
-    using Base::operator[];
-    using Base::at;
-    constexpr reference operator[](size_type pos);
-    constexpr reference at(size_type pos);
+    constexpr reference operator[](size_type pos) const;
+    constexpr reference at(size_type pos) const;
 
-    using Base::front;
-    using Base::back;
-    constexpr reference front();
-    constexpr reference back();
+    constexpr reference front() const;
+    constexpr reference back() const;
 
-    using Base::data;
-    constexpr pointer data() noexcept;
+    constexpr pointer data() const noexcept;
 
     constexpr Basic_string_view substr(
         size_type pos = 0, size_type n = Base::npos) const;
@@ -87,53 +84,79 @@ constexpr Basic_string_view<charT,T>::Basic_string_view(
 // Iterator support ------------------------------------------------------------
 
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::begin() noexcept -> iterator
+constexpr auto Basic_string_view<C,T>::begin() const noexcept -> iterator
 {
     return data();
 }
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::end() noexcept -> iterator
+constexpr auto Basic_string_view<C,T>::cbegin() const noexcept -> iterator
 {
-    return begin() + Base::size();
+    return begin();
 }
 
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::rbegin() noexcept -> reverse_iterator
+constexpr auto Basic_string_view<C,T>::end() const noexcept -> iterator
+{
+    return begin() + Base::size();
+}
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::cend() const noexcept -> iterator
+{
+    return end();
+}
+
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::rbegin() const noexcept
+    -> reverse_iterator
 {
     return reverse_iterator{end()};
 }
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::rend() noexcept -> reverse_iterator
+constexpr auto Basic_string_view<C,T>::crbegin() const noexcept
+    -> reverse_iterator
+{
+    return rbegin();
+}
+
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::rend() const noexcept -> reverse_iterator
 {
     return reverse_iterator{begin()};
+}
+template <class C, class T>
+constexpr auto Basic_string_view<C,T>::crend() const noexcept
+    -> reverse_iterator
+{
+    return rend();
 }
 
 // Element access --------------------------------------------------------------
 
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::operator[](size_type pos) -> reference
+constexpr auto Basic_string_view<C,T>::operator[](size_type pos) const
+    -> reference
 {
     return const_cast<reference>(Base::operator[](pos));
 }
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::at(size_type pos) -> reference
+constexpr auto Basic_string_view<C,T>::at(size_type pos) const -> reference
 {
     return const_cast<reference>(Base::at(pos));
 }
 
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::front() -> reference
+constexpr auto Basic_string_view<C,T>::front() const -> reference
 {
     return const_cast<reference>(Base::front());
 }
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::back() -> reference
+constexpr auto Basic_string_view<C,T>::back() const -> reference
 {
     return const_cast<reference>(Base::back());
 }
 
 template <class C, class T>
-constexpr auto Basic_string_view<C,T>::data() noexcept -> pointer
+constexpr auto Basic_string_view<C,T>::data() const noexcept -> pointer
 {
     return const_cast<pointer>(Base::data());
 }
