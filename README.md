@@ -4,11 +4,9 @@ Generic library components for my C++ projects.
 
 ## Dependencies
 
-* A partial implementation of the upcoming standard following C++14
+* Partial C++17 support
     - Variable type traits
-* Technical Specifications
-    - Library Fundamentals
-        + `<experimental/string_view>`
+    - `<string_view>`
 
 ## Specification
 
@@ -41,7 +39,7 @@ Remarks: This function shall not participate in overload resolution unless `std:
 ### 2 Header `<jegp/String_view.hpp>` synopsis
 
 ```C++
-#include <experimental/string_view>
+#include <string_view>
 
 namespace jegp {
 
@@ -62,11 +60,9 @@ Describes a mutable string view.
 
 ```C++
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view
-  : public std::experimental::basic_string_view<charT,traits> {
+class Basic_string_view : public std::basic_string_view<charT,traits> {
 private:
-    using Base =
-        std::experimental::basic_string_view<charT,traits>; // exposition only
+    using Base = std::basic_string_view<charT,traits>; // exposition only
 public:
     using typename Base::pointer;
     using typename Base::reference;

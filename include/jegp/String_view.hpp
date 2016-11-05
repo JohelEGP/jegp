@@ -3,15 +3,14 @@
 
 #include <string>   // char_traits
 #include <iterator> // reverse_iterator
-#include <experimental/string_view>
+#include <string_view>
 
 namespace jegp {
 
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view
-  : public std::experimental::basic_string_view<charT,traits> {
+class Basic_string_view : public std::basic_string_view<charT,traits> {
 private:
-    using Base = std::experimental::basic_string_view<charT,traits>;
+    using Base = std::basic_string_view<charT,traits>;
 
     constexpr Basic_string_view(Base) noexcept;
 public:
