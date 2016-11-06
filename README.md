@@ -39,8 +39,6 @@ Remarks: This function shall not participate in overload resolution unless `std:
 ### 2 Header `<jegp/String_view.hpp>` synopsis
 
 ```C++
-#include <string_view>
-
 namespace jegp {
 
 template <class charT, class traits = std::char_traits<charT>>
@@ -60,7 +58,9 @@ Describes a mutable string view.
 
 ```C++
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view : public std::basic_string_view<charT,traits> {
+class Basic_string_view
+  : public std::basic_string_view<charT,traits> // exposition only
+{
 private:
     using Base = std::basic_string_view<charT,traits>; // exposition only
 public:
