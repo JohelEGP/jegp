@@ -76,6 +76,9 @@ public:
     constexpr Basic_string_view(charT* str);
     constexpr Basic_string_view(charT* str, size_type len);
 
+    template <class T>
+    explicit constexpr operator T() const noexcept(/*see below*/);
+
     constexpr iterator begin() const noexcept;
     constexpr iterator end() const noexcept;
     constexpr iterator cbegin() const noexcept;
@@ -106,6 +109,14 @@ constexpr Basic_string_view(charT* str);
 constexpr Basic_string_view(charT* str, size_type len);
 ```
 Effects: Initializes the base with the same argument list.
+
+```C++
+template <class T>
+explicit constexpr operator T() const noexcept(/*see below*/);
+```
+Returns: `T{static_cast<Base>(*this)}`.
+Remarks: The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.
+Notes: This allows conversion from String_view to std::string, just like std::string_view.
 
 ##### 2.1.2 Iterator support
 

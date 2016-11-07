@@ -1,8 +1,9 @@
 #ifndef JEGP_STRING_VIEW_HPP
 #define JEGP_STRING_VIEW_HPP
 
-#include <string>   // char_traits
-#include <iterator> // reverse_iterator
+#include <string>      // char_traits
+#include <iterator>    // reverse_iterator
+#include <type_traits> // enable_if, is_constructible, is_nothrow_constructible
 #include <string_view>
 
 namespace jegp {
@@ -25,6 +26,11 @@ public:
     constexpr Basic_string_view() noexcept = default;
     constexpr Basic_string_view(charT* str);
     constexpr Basic_string_view(charT* str, size_type len);
+
+    template <class T,
+              class = std::enable_if_t<std::is_constructible_v<T,Base>>>
+    explicit constexpr operator T()
+        const noexcept(std::is_nothrow_constructible_v<T,Base>);
 
     constexpr iterator begin() const noexcept;
     constexpr iterator end() const noexcept;
@@ -79,6 +85,14 @@ constexpr Basic_string_view<charT,T>::Basic_string_view(
     charT* str, size_type len)
   : Base{str,len}
 {
+}
+
+template <class C, class T>
+    template <class U, class>
+constexpr Basic_string_view<C,T>::operator U()
+    const noexcept(std::is_nothrow_constructible_v<U,Base>)
+{
+    return U{static_cast<Base>(*this)};
 }
 
 // Iterator support ------------------------------------------------------------
