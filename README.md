@@ -114,9 +114,9 @@ Effects: Initializes the base with the same argument list.
 template <class T>
 explicit constexpr operator T() const noexcept(/*see below*/);
 ```
-Returns: `T{static_cast<Base>(*this)}`.
-Remarks: The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.
-Notes: This allows conversion from String_view to std::string, just like std::string_view.
+Returns: `T{static_cast<Base>(*this)}`.<br/>
+Remarks: The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
+Notes: This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
 
 ##### 2.1.2 Iterator support
 
