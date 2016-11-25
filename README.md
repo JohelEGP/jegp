@@ -7,6 +7,7 @@ Generic library components for my C++ projects.
 * Partial C++17 support
     - Variable type traits
     - `<string_view>`
+* [Boost.Hana](http://www.boost.org/doc/libs/release/libs/hana/doc/html/index.html)
 
 ## Specification
 
@@ -36,7 +37,38 @@ constexpr auto underlying_value(Enum e) noexcept;
 _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
 _Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
 
-### 2 Header `<jegp/String_view.hpp>` synopsis
+### 3 Header `<jegp/Literal_constant.hpp>` synopsis
+
+```C++
+namespace jegp {
+
+template <class T>
+struct Literal_constant_tag;
+
+template <class T, class... Constants>
+struct Literal_constant;
+
+} // namespace jegp
+```
+
+#### 3.1 Class template `Literal_constant`
+
+Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
+
+```C++
+template <class T, class... Constants>
+struct Literal_constant {
+    static constexpr T value {boost::hana::value<Constants>()...};
+    using value_type = T;
+    using type       = Literal_constant<T,Constants...>;
+    constexpr operator value_type() const noexcept { return value; }
+    constexpr value_type operator()() const noexcept { return value; }
+
+    using hana_tag = Literal_constant_tag<T>;
+};
+```
+
+### 4 Header `<jegp/String_view.hpp>` synopsis
 
 ```C++
 namespace jegp {
@@ -52,7 +84,7 @@ using   wString_view = Basic_string_view<wchar_t>;
 } // namespace jegp
 ```
 
-#### 2.1 Class template `Basic_string_view`
+#### 4.1 Class template `Basic_string_view`
 
 Describes a mutable string view.
 
@@ -102,7 +134,7 @@ public:
 };
 ```
 
-##### 2.1.1 Construction
+##### 4.1.1 Construction
 
 ```C++
 constexpr Basic_string_view(charT* str);
@@ -118,7 +150,7 @@ _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
 _Notes:_ This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
 
-##### 2.1.2 Iterator support
+##### 4.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -144,7 +176,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### 2.1.3 Element access
+##### 4.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -171,7 +203,7 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### 2.1.4 String operations
+##### 4.1.4 String operations
 
 ```C++
 constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)
