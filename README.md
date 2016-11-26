@@ -38,6 +38,9 @@ This specification is the public API.
 ```C++
 namespace jegp {
 
+template <class T>
+using Value_type = typename T::value_type;
+
 template <class Enum>
 constexpr auto underlying(Enum e) noexcept;
 
