@@ -33,8 +33,8 @@ Casts an enumeration value to its underlying type.
 template <class Enum>
 constexpr auto underlying_value(Enum e) noexcept;
 ```
-Returns: `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
-Remarks: This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
+_Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
+_Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
 
 ### 2 Header `<jegp/String_view.hpp>` synopsis
 
@@ -108,15 +108,15 @@ public:
 constexpr Basic_string_view(charT* str);
 constexpr Basic_string_view(charT* str, size_type len);
 ```
-Effects: Initializes the base with the same argument list.
+_Effects:_ Initializes the base with the same argument list.
 
 ```C++
 template <class T>
 explicit constexpr operator T() const noexcept(/*see below*/);
 ```
-Returns: `T{static_cast<Base>(*this)}`.<br/>
-Remarks: The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
-Notes: This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
+_Returns:_ `T{static_cast<Base>(*this)}`.<br/>
+_Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
+_Notes:_ This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
 
 ##### 2.1.2 Iterator support
 
@@ -124,52 +124,52 @@ Notes: This allows conversion from `String_view` to `std::string`, just like `st
 constexpr iterator begin() const noexcept;
 constexpr iterator cbegin() const noexcept;
 ```
-Returns: `data()`.
+_Returns:_ `data()`.
 
 ```C++
 constexpr iterator end() const noexcept;
 constexpr iterator cend() const noexcept;
 ```
-Returns: `begin() + Base::size()`.
+_Returns:_ `begin() + Base::size()`.
 
 ```C++
 constexpr reverse_iterator rbegin() const noexcept;
 constexpr reverse_iterator crbegin() const noexcept;
 ```
-Returns: `reverse_iterator{end()}`.
+_Returns:_ `reverse_iterator{end()}`.
 
 ```C++
 constexpr reverse_iterator rend() const noexcept;
 constexpr reverse_iterator crend() const noexcept;
 ```
-Returns: `reverse_iterator{begin()}`.
+_Returns:_ `reverse_iterator{begin()}`.
 
 ##### 2.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
 ```
-Effects: Equivalent to `return const_cast<reference>(Base::operator[](pos));`.
+_Effects:_ Equivalent to `return const_cast<reference>(Base::operator[](pos));`
 
 ```C++
 constexpr reference at(size_type pos) const;
 ```
-Effects: Equivalent to `return const_cast<reference>(Base::at(pos));`.
+_Effects:_ Equivalent to `return const_cast<reference>(Base::at(pos));`
 
 ```C++
 constexpr reference front() const;
 ```
-Effects: Equivalent to `return const_cast<reference>(Base::front());`.
+_Effects:_ Equivalent to `return const_cast<reference>(Base::front());`
 
 ```C++
 constexpr reference back() const;
 ```
-Effects: Equivalent to `return const_cast<reference>(Base::back());`.
+_Effects:_ Equivalent to `return const_cast<reference>(Base::back());`
 
 ```C++
 constexpr pointer data() const noexcept;
 ```
-Returns: `const_cast<pointer>(Base::data())`.
+_Returns:_ `const_cast<pointer>(Base::data())`.
 
 ##### 2.1.4 String operations
 
@@ -177,4 +177,4 @@ Returns: `const_cast<pointer>(Base::data())`.
 constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)
     const;
 ```
-Returns: A string view that equals the value of `Base::substr(pos,n)`.
+_Returns:_ A string view that equals the value of `Base::substr(pos,n)`.
