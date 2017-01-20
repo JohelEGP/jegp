@@ -60,7 +60,7 @@ using u16String_view = Basic_string_view<char16_t>;
 using u32String_view = Basic_string_view<char32_t>;
 using wString_view   = Basic_string_view<wchar_t>;
 
-} // jegp namespace
+} // namespace jegp
 
 //------------------------------------------------------------------------------
 // "String_view.ipp" -----------------------------------------------------------
@@ -184,6 +184,6 @@ constexpr auto Basic_string_view<C, T>::substr(size_type pos, size_type n) const
     return Base::substr(pos, n);
 }
 
-} // jegp namespace
+} // namespace jegp
 
 #endif // JEGP_STRING_VIEW_HPP

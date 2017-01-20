@@ -11,6 +11,6 @@ constexpr auto underlying_value(Enum e) noexcept
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
 
-} // jegp namespace
+} // namespace jegp
 
 #endif // JEGP_UTILITY_HPP

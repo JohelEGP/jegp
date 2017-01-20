@@ -22,7 +22,7 @@ namespace jegp {
 template <class Enum>
 constexpr auto underlying_value(Enum e) noexcept;
 
-} // jegp namespace
+} // namespace jegp
 ```
 
 #### 1.1 `underlying_value`
@@ -49,7 +49,7 @@ using u16String_view = Basic_string_view<char16_t>;
 using u32String_view = Basic_string_view<char32_t>;
 using   wString_view = Basic_string_view<wchar_t>;
 
-} // jegp namespace
+} // namespace jegp
 ```
 
 #### 2.1 Class template `Basic_string_view`
