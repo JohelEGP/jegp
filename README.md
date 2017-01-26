@@ -68,7 +68,9 @@ struct Literal_constant {
 };
 ```
 
-### 4 Header `<jegp/String_view.hpp>` synopsis
+### Deprecated.1 Header `<jegp/String_view.hpp>` synopsis
+
+[ _Note:_ This component has been deprecated because a "view" is supposed to reflect something inmutable in the standard, and I would not like to deviate from that meaning. It will be renamed or removed some time in the future. -- _end note_ ]
 
 ```C++
 namespace jegp {
@@ -84,7 +86,7 @@ using   wString_view = Basic_string_view<wchar_t>;
 } // namespace jegp
 ```
 
-#### 4.1 Class template `Basic_string_view`
+#### Deprecated.1.1 Class template `Basic_string_view`
 
 Describes a mutable string view.
 
@@ -134,7 +136,7 @@ public:
 };
 ```
 
-##### 4.1.1 Construction
+##### Deprecated.1.1.1 Construction
 
 ```C++
 constexpr Basic_string_view(charT* str);
@@ -150,7 +152,7 @@ _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
 _Notes:_ This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
 
-##### 4.1.2 Iterator support
+##### Deprecated.1.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -176,7 +178,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### 4.1.3 Element access
+##### Deprecated.1.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -203,7 +205,7 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### 4.1.4 String operations
+##### Deprecated.1.1.4 String operations
 
 ```C++
 constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)

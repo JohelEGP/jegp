@@ -9,7 +9,9 @@
 namespace jegp {
 
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view : public std::basic_string_view<charT, traits> {
+[[deprecated(
+    "Renaming (a \"view\" is inmutable) or removing")]] class Basic_string_view
+    : public std::basic_string_view<charT, traits> {
 private:
     using Base = std::basic_string_view<charT, traits>;
 
