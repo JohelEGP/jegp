@@ -21,18 +21,18 @@ This specification is the public API.
 namespace jegp {
 
 template <class Enum>
-constexpr auto underlying_value(Enum e) noexcept;
+constexpr auto underlying(Enum e) noexcept;
 
 } // namespace jegp
 ```
 
-#### 1.1 `underlying_value`
+#### 1.1 `underlying`
 
 Casts an enumeration value to its underlying type.
 
 ```C++
 template <class Enum>
-constexpr auto underlying_value(Enum e) noexcept;
+constexpr auto underlying(Enum e) noexcept;
 ```
 _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
 _Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
@@ -68,7 +68,22 @@ struct Literal_constant {
 };
 ```
 
-### Deprecated.1 Header `<jegp/String_view.hpp>` synopsis
+### Deprecated.1 Header `<jegp/utility.hpp>` synopsis
+
+```C++
+namespace jegp {
+
+template <class Enum>
+constexpr auto underlying_value(Enum e) noexcept;
+
+} // namespace jegp
+```
+
+#### 1.1 `underlying_value`
+
+This component has been deprecated and replaced by `underlying`.
+
+### Deprecated.2 Header `<jegp/String_view.hpp>` synopsis
 
 [ _Note:_ This component has been deprecated because a "view" is supposed to reflect something inmutable in the standard, and I would not like to deviate from that meaning. It will be renamed or removed some time in the future. -- _end note_ ]
 
@@ -86,7 +101,7 @@ using   wString_view = Basic_string_view<wchar_t>;
 } // namespace jegp
 ```
 
-#### Deprecated.1.1 Class template `Basic_string_view`
+#### Deprecated.2.1 Class template `Basic_string_view`
 
 Describes a mutable string view.
 
@@ -136,7 +151,7 @@ public:
 };
 ```
 
-##### Deprecated.1.1.1 Construction
+##### Deprecated.2.1.1 Construction
 
 ```C++
 constexpr Basic_string_view(charT* str);
@@ -152,7 +167,7 @@ _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
 _Notes:_ This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
 
-##### Deprecated.1.1.2 Iterator support
+##### Deprecated.2.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -178,7 +193,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### Deprecated.1.1.3 Element access
+##### Deprecated.2.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -205,7 +220,7 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### Deprecated.1.1.4 String operations
+##### Deprecated.2.1.4 String operations
 
 ```C++
 constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)
