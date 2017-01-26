@@ -37,7 +37,7 @@ constexpr auto underlying_value(Enum e) noexcept;
 _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
 _Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
 
-### 3 Header `<jegp/Literal_constant.hpp>` synopsis
+### 2 Header `<jegp/Literal_constant.hpp>` synopsis
 
 ```C++
 namespace jegp {
@@ -51,7 +51,7 @@ struct Literal_constant;
 } // namespace jegp
 ```
 
-#### 3.1 Class template `Literal_constant`
+#### 2.1 Class template `Literal_constant`
 
 Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
 
