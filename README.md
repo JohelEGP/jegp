@@ -68,21 +68,6 @@ struct Literal_constant {
 };
 ```
 
-### Deprecated.1 Header `<jegp/utility.hpp>` synopsis
-
-```C++
-namespace jegp {
-
-template <class Enum>
-constexpr auto underlying_value(Enum e) noexcept;
-
-} // namespace jegp
-```
-
-#### 1.1 `underlying_value`
-
-This component has been deprecated and replaced by `underlying`.
-
 ### Deprecated.2 Header `<jegp/String_view.hpp>` synopsis
 
 [ _Note:_ This component has been deprecated because a "view" is supposed to reflect something inmutable in the standard, and I would not like to deviate from that meaning. It will be renamed or removed some time in the future. -- _end note_ ]

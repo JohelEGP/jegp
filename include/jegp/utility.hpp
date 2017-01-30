@@ -11,13 +11,6 @@ constexpr auto underlying(Enum e) noexcept
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
 
-template <class Enum, class = std::enable_if_t<std::is_enum_v<Enum>>>
-[[deprecated("Renamed to underlying")]] constexpr auto
-underlying_value(Enum e) noexcept
-{
-    return underlying(e);
-}
-
 } // namespace jegp
 
 #endif // JEGP_UTILITY_HPP
