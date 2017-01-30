@@ -68,31 +68,29 @@ struct Literal_constant {
 };
 ```
 
-### Deprecated.2 Header `<jegp/String_view.hpp>` synopsis
-
-[ _Note:_ This component has been deprecated because a "view" is supposed to reflect something inmutable in the standard, and I would not like to deviate from that meaning. It will be renamed or removed some time in the future. -- _end note_ ]
+### 3 Header `<jegp/String_ref.hpp>` synopsis
 
 ```C++
 namespace jegp {
 
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view;
+class Basic_string_ref;
 
-using    String_view = Basic_string_view<char>;
-using u16String_view = Basic_string_view<char16_t>;
-using u32String_view = Basic_string_view<char32_t>;
-using   wString_view = Basic_string_view<wchar_t>;
+using    String_ref = Basic_string_ref<char>;
+using u16String_ref = Basic_string_ref<char16_t>;
+using u32String_ref = Basic_string_ref<char32_t>;
+using   wString_ref = Basic_string_ref<wchar_t>;
 
 } // namespace jegp
 ```
 
-#### Deprecated.2.1 Class template `Basic_string_view`
+#### 3.1 Class template `Basic_string_ref`
 
-Describes a mutable string view.
+Describes a mutable string reference.
 
 ```C++
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_view
+class Basic_string_ref
   : public std::basic_string_view<charT,traits> // exposition only
 {
 private:
@@ -106,9 +104,9 @@ public:
     using const_reverse_iterator = reverse_iterator;
     using typename Base::size_type;
 
-    constexpr Basic_string_view() noexcept = default;
-    constexpr Basic_string_view(charT* str);
-    constexpr Basic_string_view(charT* str, size_type len);
+    constexpr Basic_string_ref() noexcept = default;
+    constexpr Basic_string_ref(charT* str);
+    constexpr Basic_string_ref(charT* str, size_type len);
 
     template <class T>
     explicit constexpr operator T() const noexcept(/*see below*/);
@@ -131,16 +129,16 @@ public:
 
     constexpr pointer data() const noexcept;
 
-    constexpr Basic_string_view substr(
+    constexpr Basic_string_ref substr(
         size_type pos = 0, size_type n = Base::npos) const;
 };
 ```
 
-##### Deprecated.2.1.1 Construction
+##### 3.1.1 Construction
 
 ```C++
-constexpr Basic_string_view(charT* str);
-constexpr Basic_string_view(charT* str, size_type len);
+constexpr Basic_string_ref(charT* str);
+constexpr Basic_string_ref(charT* str, size_type len);
 ```
 _Effects:_ Initializes the base with the same argument list.
 
@@ -150,9 +148,9 @@ explicit constexpr operator T() const noexcept(/*see below*/);
 ```
 _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
-_Notes:_ This allows conversion from `String_view` to `std::string`, just like `std::string_view`.
+_Notes:_ This allows conversion from `String_ref` to `std::string`, just like `std::string_view`.
 
-##### Deprecated.2.1.2 Iterator support
+##### 3.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -178,7 +176,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### Deprecated.2.1.3 Element access
+##### 3.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -205,10 +203,10 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### Deprecated.2.1.4 String operations
+##### 3.1.4 String operations
 
 ```C++
-constexpr Basic_string_view substr(size_type pos = 0, size_type n = Base::npos)
+constexpr Basic_string_ref substr(size_type pos = 0, size_type n = Base::npos)
     const;
 ```
-_Returns:_ A string view that equals the value of `Base::substr(pos,n)`.
+_Returns:_ A string reference that equals the value of `Base::substr(pos,n)`.
