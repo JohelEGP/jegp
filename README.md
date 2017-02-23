@@ -53,7 +53,7 @@ struct Literal_constant;
 
 #### 2.1 Class template `Literal_constant`
 
-Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/1_62_0/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
+Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/release/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
 
 ```C++
 template <class T, class... Constants>
