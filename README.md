@@ -2,12 +2,30 @@
 
 Generic library components for my C++ projects.
 
-## Dependencies
+## Getting started
 
-* Partial C++17 support
-    - Variable type traits
-    - `<string_view>`
+### Dependencies
+
+* A partial C++17 implementation
 * [Boost.Hana](http://www.boost.org/doc/libs/release/libs/hana/doc/html/index.html)
+
+### Installation
+
+jegp is header-only. It is enough to make the contents of [include/](include/) visible to your building process to start using the library.
+
+We support [CMake](https://cmake.org/). Just execute these commands from the root of the project:
+
+```
+cmake -E make_directory build
+cmake -E chdir build cmake ..
+```
+
+And optionally install the library (commands for linux):
+
+```
+cd build
+make install
+```
 
 ## Specification
 
