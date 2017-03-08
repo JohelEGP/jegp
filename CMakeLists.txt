@@ -21,6 +21,7 @@ if (Boost.Hana_FOUND)
     target_link_libraries(jegp INTERFACE hana)
 else()
     find_package(Boost 1.61.0 REQUIRED)
+    target_link_libraries(jegp INTERFACE Boost::boost)
 endif()
 
 install(TARGETS jegp EXPORT jegpConfig)
