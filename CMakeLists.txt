@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.0)
+cmake_minimum_required(VERSION 3.3.0)
 
 project(jegp VERSION 3.0.0 LANGUAGES CXX)
 
@@ -10,7 +10,7 @@ target_include_directories(jegp INTERFACE
 set_property(TARGET jegp APPEND PROPERTY
     COMPATIBLE_INTERFACE_STRING jegp_VERSION_MAJOR)
 
-if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.8.0)
+if (NOT 3.8.0 VERSION_LESS CMAKE_VERSION)
     target_compile_features(jegp INTERFACE cxx_std_17)
 else()
     target_compile_options(jegp INTERFACE -std=c++1z)
