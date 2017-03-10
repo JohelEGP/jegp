@@ -10,7 +10,7 @@ target_include_directories(jegp INTERFACE
 set_property(TARGET jegp APPEND PROPERTY
     COMPATIBLE_INTERFACE_STRING jegp_VERSION_MAJOR)
 
-if (NOT 3.8.0 VERSION_LESS CMAKE_VERSION)
+if (NOT 3.8.0 VERSION_GREATER CMAKE_VERSION)
     target_compile_features(jegp INTERFACE cxx_std_17)
 else()
     target_compile_options(jegp INTERFACE -std=c++1z)
