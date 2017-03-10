@@ -24,7 +24,7 @@ else()
     target_link_libraries(jegp INTERFACE Boost::boost)
 endif()
 
-install(TARGETS jegp EXPORT jegpConfig)
+install(TARGETS jegp EXPORT jegpTargets)
 install(DIRECTORY include/ DESTINATION include)
 
 include(CMakePackageConfigHelpers)
@@ -32,8 +32,14 @@ write_basic_package_version_file(jegpConfigVersion.cmake
     VERSION ${jegp_VERSION}
     COMPATIBILITY SameMajorVersion)
 
-install(EXPORT jegpConfig DESTINATION cmake)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jegpConfigVersion.cmake
-    DESTINATION cmake)
+export(EXPORT jegpTargets FILE jegpTargets.cmake)
+configure_file(jegpConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/jegpConfig.cmake
+    COPYONLY)
 
-export(EXPORT jegpConfig FILE jegpConfig.cmake)
+install(EXPORT jegpTargets DESTINATION cmake)
+install(
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/jegpConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/jegpConfigVersion.cmake
+    DESTINATION cmake)
