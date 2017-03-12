@@ -5,7 +5,7 @@ project(jegp VERSION 3.0.0 LANGUAGES CXX)
 add_library(jegp INTERFACE)
 target_include_directories(jegp INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include/jegp>
+    $<INSTALL_INTERFACE:include>
 )
 set_property(TARGET jegp APPEND PROPERTY
     COMPATIBLE_INTERFACE_STRING jegp_VERSION_MAJOR)
