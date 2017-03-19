@@ -51,8 +51,8 @@ public:
 
     constexpr pointer data() const noexcept;
 
-    constexpr Basic_string_ref
-    substr(size_type pos = 0, size_type n = Base::npos) const;
+    constexpr Basic_string_ref substr(
+        size_type pos = 0, size_type n = Base::npos) const;
 };
 
 using String_ref    = Basic_string_ref<char>;

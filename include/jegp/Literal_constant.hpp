@@ -43,7 +43,7 @@ struct value_impl<jegp::Literal_constant_tag<T>> {
 
 template <class T, class From>
 struct to_impl<jegp::Literal_constant_tag<T>, From>
-    : embedding<is_embedded<typename From::value_type, T>::value> {
+  : embedding<is_embedded<typename From::value_type, T>::value> {
     template <class U>
     static constexpr auto apply(const U&) noexcept
     {
