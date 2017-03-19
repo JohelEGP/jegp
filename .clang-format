@@ -19,7 +19,8 @@ BinPackArguments: true
 BinPackParameters: true
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Stroustrup
-# BreakBeforeTernaryOperators:
+BreakBeforeInheritanceComma: true
+BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: false
 BreakStringLiterals: true
 ColumnLimit: 80
@@ -30,27 +31,21 @@ ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 DisableFormat: false
+FixNamespaceComments: true
 IncludeCategories:
-    # Standard Library
-    -   Regex:      '<(experimental/(ranges/)?)?[a-z_]+>'
+    -   Regex:      '<(experimental/(ranges/)?)?[a-z_]+>' # Standard Library
         Priority:   1
-    # GSL
     -   Regex:      '<gsl/.+>'
         Priority:   2
-    # Boost
     -   Regex:      '<boost/.+>'
         Priority:   3
-    # range-v3
     -   Regex:      '<range/v3/.+>'
         Priority:   4
-    # jegp
     -   Regex:      '<jegp/.+>'
         Priority:   6
-    # Local header
-    -   Regex:      '".+"'
+    -   Regex:      '".+"' # Local header
         Priority:   7
-    # Others
-    -   Regex:      '.+'
+    -   Regex:      '.+' # Others
         Priority:   5
 IndentCaseLabels: false
 IndentWidth: 4
