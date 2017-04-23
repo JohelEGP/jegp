@@ -19,7 +19,8 @@ endif()
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/find_dependencies.cmake)
 target_link_libraries(jegp INTERFACE
     $<$<BOOL:${Boost.Hana_FOUND}>:hana>
-    $<$<NOT:$<BOOL:${Boost.Hana_FOUND}>>:Boost::boost>)
+    $<$<NOT:$<BOOL:${Boost.Hana_FOUND}>>:Boost::boost>
+    type_safe)
 
 install(TARGETS jegp EXPORT jegpTargets)
 install(DIRECTORY include/ DESTINATION include)

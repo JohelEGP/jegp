@@ -89,7 +89,37 @@ struct Literal_constant {
 };
 ```
 
-### 3 Header `<jegp/String_ref.hpp>` synopsis
+### 3 Header `<jegp/Strong_typedef.hpp>` synopsis
+
+```C++
+#include <type_safe/strong_typedef.hpp>
+
+namespace jegp {
+
+template <class T, class Phantom>
+class Strong_typedef;
+
+} // namespace jegp
+```
+
+#### 3.1 Class template `Strong_typedef`
+
+The class template `Strong_typedef` is a convenience wrapper over [`type_safe::strong_typedef`](http://foonathan.net/doc/type_safe/doc_strong_typedef.html#ts::strong_typedef-Tag,T-).
+
+```C++
+template <class T, class Phantom>
+class Strong_typedef
+  : public type_safe::strong_typedef<Phantom, T>
+  , public type_safe::strong_typedef_op::equality_comparison<
+        Strong_typedef<T, Phantom>>
+  , public type_safe::strong_typedef_op::relational_comparison<
+        Strong_typedef<T, Phantom>> {
+public:
+    using type_safe::strong_typedef<Phantom, T>::strong_typedef;
+};
+```
+
+### 4 Header `<jegp/String_ref.hpp>` synopsis
 
 ```C++
 namespace jegp {
@@ -105,7 +135,7 @@ using   wString_ref = Basic_string_ref<wchar_t>;
 } // namespace jegp
 ```
 
-#### 3.1 Class template `Basic_string_ref`
+#### 4.1 Class template `Basic_string_ref`
 
 Describes a mutable string reference.
 
@@ -155,7 +185,7 @@ public:
 };
 ```
 
-##### 3.1.1 Construction
+##### 4.1.1 Construction
 
 ```C++
 constexpr Basic_string_ref(charT* str);
@@ -171,7 +201,7 @@ _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
 _Notes:_ This allows conversion from `String_ref` to `std::string`, just like `std::string_view`.
 
-##### 3.1.2 Iterator support
+##### 4.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -197,7 +227,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### 3.1.3 Element access
+##### 4.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -224,7 +254,7 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### 3.1.4 String operations
+##### 4.1.4 String operations
 
 ```C++
 constexpr Basic_string_ref substr(size_type pos = 0, size_type n = Base::npos)
