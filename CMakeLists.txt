@@ -7,8 +7,6 @@ target_include_directories(jegp INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-set_property(TARGET jegp APPEND PROPERTY
-    COMPATIBLE_INTERFACE_STRING jegp_VERSION_MAJOR)
 
 if (NOT 3.8.0 VERSION_GREATER CMAKE_VERSION)
     target_compile_features(jegp INTERFACE cxx_std_17)
