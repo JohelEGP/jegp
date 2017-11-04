@@ -6,12 +6,11 @@ Generic library components for my C++ projects.
 
 ### Dependencies
 
-* A partial C++17 implementation
+* C++17
 * [Boost.Hana](http://www.boost.org/doc/libs/release/libs/hana/doc/html/index.html)
+* [type_safe](https://github.com/foonathan/type_safe)
 
 ### Installation
-
-jegp is header-only. It is enough to make the contents of [include/](include/) visible to your building process to start using the library.
 
 We support [CMake](https://cmake.org/). Just execute these commands from the root of the project:
 
@@ -20,12 +19,18 @@ cmake -E make_directory build
 cmake -E chdir build cmake ..
 ```
 
-And optionally install the library (commands for linux):
+And optionally install the library:
 
 ```
-cd build
-make install
+cmake --build build --target install
 ```
+
+### Using
+
+After building jegp, you can use it by adding the following to your `CMakeLists.txt`.
+
+    find_package(jegp)
+    target_link_libraries(<your_target> jegp)
 
 ## Specification
 
@@ -58,7 +63,32 @@ constexpr auto underlying(Enum e) noexcept;
 _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
 _Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
 
-### 2 Header `<jegp/Literal_constant.hpp>` synopsis
+### 2 Header `<jegp/bit.hpp>` synopsis
+
+```C++
+namespace jegp {
+
+template <class T>
+constexpr auto bitsof{sizeof(T) * CHAR_BIT};
+
+template <class UnsignedInteger>
+constexpr bool is_power_of_2(UnsignedInteger x) noexcept;
+
+} // namespace jegp
+```
+
+#### 2.1 `is_power_of_2`
+
+Checks if a value is a power of 2.
+
+```C++
+template <class UnsignedInteger>
+constexpr bool is_power_of_2(UnsignedInteger x) noexcept;
+```
+_Returns:_ `true` if `x` is a power of 2, and `false` otherwise.<br/>
+_Remarks:_ This function shall not participate in overload resolution unless `std::is_unsigned_v<UnsignedInteger>` is `true` and `std::is_integral_v<UnsignedInteger>` is `true`.
+
+### 3 Header `<jegp/Literal_constant.hpp>` synopsis
 
 ```C++
 namespace jegp {
@@ -72,7 +102,7 @@ struct Literal_constant;
 } // namespace jegp
 ```
 
-#### 2.1 Class template `Literal_constant`
+#### 3.1 Class template `Literal_constant`
 
 Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/release/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
 
@@ -89,7 +119,7 @@ struct Literal_constant {
 };
 ```
 
-### 3 Header `<jegp/Strong_typedef.hpp>` synopsis
+### 4 Header `<jegp/Strong_typedef.hpp>` synopsis
 
 ```C++
 #include <type_safe/strong_typedef.hpp>
@@ -102,7 +132,7 @@ class Strong_typedef;
 } // namespace jegp
 ```
 
-#### 3.1 Class template `Strong_typedef`
+#### 4.1 Class template `Strong_typedef`
 
 The class template `Strong_typedef` is a convenience wrapper over [`type_safe::strong_typedef`](http://foonathan.net/doc/type_safe/doc_strong_typedef.html#ts::strong_typedef-Tag,T-).
 
@@ -119,7 +149,7 @@ public:
 };
 ```
 
-### 4 Header `<jegp/String_ref.hpp>` synopsis
+### 5 Header `<jegp/String_ref.hpp>` synopsis
 
 ```C++
 namespace jegp {
@@ -135,7 +165,7 @@ using   wString_ref = Basic_string_ref<wchar_t>;
 } // namespace jegp
 ```
 
-#### 4.1 Class template `Basic_string_ref`
+#### 5.1 Class template `Basic_string_ref`
 
 Describes a mutable string reference.
 
@@ -185,7 +215,7 @@ public:
 };
 ```
 
-##### 4.1.1 Construction
+##### 5.1.1 Construction
 
 ```C++
 constexpr Basic_string_ref(charT* str);
@@ -201,7 +231,7 @@ _Returns:_ `T{static_cast<Base>(*this)}`.<br/>
 _Remarks:_ The expression inside `noexcept` is equivalent to `std::is_nothrow_constructible_v<T,Base>`. This function shall not participate in overload resolution unless `std::is_constructible_v<T,Base>` is `true`.<br/>
 _Notes:_ This allows conversion from `String_ref` to `std::string`, just like `std::string_view`.
 
-##### 4.1.2 Iterator support
+##### 5.1.2 Iterator support
 
 ```C++
 constexpr iterator begin() const noexcept;
@@ -227,7 +257,7 @@ constexpr reverse_iterator crend() const noexcept;
 ```
 _Returns:_ `reverse_iterator{begin()}`.
 
-##### 4.1.3 Element access
+##### 5.1.3 Element access
 
 ```C++
 constexpr reference operator[](size_type pos) const;
@@ -254,7 +284,7 @@ constexpr pointer data() const noexcept;
 ```
 _Returns:_ `const_cast<pointer>(Base::data())`.
 
-##### 4.1.4 String operations
+##### 5.1.4 String operations
 
 ```C++
 constexpr Basic_string_ref substr(size_type pos = 0, size_type n = Base::npos)
