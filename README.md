@@ -7,6 +7,7 @@ Generic library components for my C++ projects.
 ### Dependencies
 
 * C++17
+* [BCM](https://github.com/boost-cmake/boost/tree/master/bcm)
 * [Boost.Hana](http://www.boost.org/doc/libs/release/libs/hana/doc/html/index.html)
 * [type_safe](https://github.com/foonathan/type_safe)
 
@@ -30,7 +31,7 @@ cmake --build build --target install
 After building jegp, you can use it by adding the following to your `CMakeLists.txt`.
 
     find_package(jegp)
-    target_link_libraries(<your_target> jegp)
+    target_link_libraries(<your_target> jegp::jegp)
 
 ## Specification
 
@@ -104,7 +105,7 @@ struct Literal_constant;
 
 #### 3.1 Class template `Literal_constant`
 
-Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`](http://www.boost.org/doc/libs/release/libs/hana/doc/html/group__group-Constant.html)s. `Literal_constant` is itself a Boost.Hana `Constant`.
+Class template `Literal_constant` wraps a `constexpr` value of type `T` initialized from Boost.Hana [`Constant`s](http://www.boost.org/doc/libs/release/libs/hana/doc/html/group__group-Constant.html). `Literal_constant` is itself a Boost.Hana `Constant`.
 
 ```C++
 template <class T, class... Constants>
