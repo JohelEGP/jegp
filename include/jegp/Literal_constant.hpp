@@ -7,10 +7,11 @@
 namespace jegp {
 
 template <class T>
-struct Literal_constant_tag;
+struct[[deprecated]] Literal_constant_tag;
 
 template <class T, class... Constants>
-struct Literal_constant {
+struct[[deprecated]] Literal_constant
+{
     static constexpr T value{boost::hana::value<Constants>()...};
 
     using value_type = T;

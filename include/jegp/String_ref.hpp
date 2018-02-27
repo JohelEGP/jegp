@@ -9,7 +9,9 @@
 namespace jegp {
 
 template <class charT, class traits = std::char_traits<charT>>
-class Basic_string_ref : public std::basic_string_view<charT, traits> {
+class[[deprecated]] Basic_string_ref
+  : public std::basic_string_view<charT, traits>
+{
 private:
     using Base = std::basic_string_view<charT, traits>;
 
@@ -25,13 +27,13 @@ public:
     using typename Base::size_type;
 
     constexpr Basic_string_ref() noexcept = default;
-    constexpr Basic_string_ref(charT* str);
-    constexpr Basic_string_ref(charT* str, size_type len);
+    constexpr Basic_string_ref(charT * str);
+    constexpr Basic_string_ref(charT * str, size_type len);
 
     template <
         class T, class = std::enable_if_t<std::is_constructible_v<T, Base>>>
-    explicit constexpr operator T() const
-        noexcept(std::is_nothrow_constructible_v<T, Base>);
+    explicit constexpr operator T()
+        const noexcept(std::is_nothrow_constructible_v<T, Base>);
 
     constexpr iterator begin() const noexcept;
     constexpr iterator end() const noexcept;

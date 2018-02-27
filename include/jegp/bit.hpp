@@ -13,7 +13,7 @@ template <
     class UnsignedInteger, class = std::enable_if_t<
                                std::is_unsigned_v<UnsignedInteger> &&
                                std::is_integral_v<UnsignedInteger>>>
-constexpr bool is_power_of_2(UnsignedInteger x) noexcept
+[[deprecated]] constexpr bool is_power_of_2(UnsignedInteger x) noexcept
 {
     return (x != 0) && (x & (x - 1)) == 0;
 }
