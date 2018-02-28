@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8.0)
 project(jegp VERSION 3.3.0 LANGUAGES CXX)
 
 add_library(jegp INTERFACE)
+add_library(jegp::jegp ALIAS jegp)
 
 target_include_directories(jegp INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -25,7 +26,9 @@ write_basic_package_version_file(jegpConfigVersion.cmake
 export(EXPORT jegpTargets)
 file(COPY cmake/ DESTINATION .)
 
-install(EXPORT jegpTargets DESTINATION lib/cmake/jegp)
-install(DIRECTORY cmake/   DESTINATION lib/cmake/jegp)
+install(EXPORT jegpTargets
+    DESTINATION lib/cmake/jegp
+    NAMESPACE jegp)
+install(DIRECTORY cmake/ DESTINATION lib/cmake/jegp)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jegpConfigVersion.cmake
     DESTINATION lib/cmake/jegp)
