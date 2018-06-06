@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8.0)
-project(jegp VERSION 3.3.0 LANGUAGES CXX)
+project(jegp VERSION 3.4.0 LANGUAGES CXX)
 
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)

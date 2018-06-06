@@ -30,7 +30,7 @@ cmake --build build --target install
 After building jegp, you can use it by adding the following to your `CMakeLists.txt`.
 
     find_package(jegp)
-    target_link_libraries(<your_target> jegp)
+    target_link_libraries(<your_target> jegp::jegp)
 
 ## Specification
 
