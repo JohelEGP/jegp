@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8.0)
-project(jegp VERSION 3.4.0 LANGUAGES CXX)
+project(jegp VERSION 4.0.0 LANGUAGES CXX)
 
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)
@@ -9,11 +9,6 @@ target_include_directories(jegp INTERFACE
     $<INSTALL_INTERFACE:include>)
 
 target_compile_features(jegp INTERFACE cxx_std_17)
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/find_dependencies.cmake)
-target_link_libraries(jegp INTERFACE
-    $<IF:$<BOOL:${Boost.Hana_FOUND}>,hana:Boost::boost>
-    type_safe)
 
 install(TARGETS jegp EXPORT jegpTargets)
 install(DIRECTORY include/ DESTINATION include)
