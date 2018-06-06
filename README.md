@@ -41,6 +41,9 @@ This specification is the public API.
 ```C++
 namespace jegp {
 
+template <class T>
+constexpr auto bitsof{sizeof(T) * CHAR_BIT};
+
 template <class Enum>
 constexpr auto underlying(Enum e) noexcept;
 
@@ -57,14 +60,3 @@ constexpr auto underlying(Enum e) noexcept;
 ```
 _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.<br/>
 _Remarks:_ This function shall not participate in overload resolution unless `std::is_enum_v<Enum>` is `true`.
-
-### 2 Header `<jegp/bit.hpp>` synopsis
-
-```C++
-namespace jegp {
-
-template <class T>
-constexpr auto bitsof{sizeof(T) * CHAR_BIT};
-
-} // namespace jegp
-```
