@@ -1,0 +1,45 @@
+language: cpp
+
+env:
+  global:
+  - PATH=/tmp/bin:$PATH
+  - CMAKE_CXX_FLAGS="-Wpedantic -Wall -Wextra"
+
+matrix:
+  include:
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-8
+    env:
+    - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - llvm-toolchain-trusty-6.0
+        - ubuntu-toolchain-r-test
+        packages:
+        - clang-6.0
+        - g++-8
+    env:
+    - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
+  - os: linux
+    env:
+    - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++ && CMAKE_CXX_FLAGS=\"$CMAKE_CXX_FLAGS -stdlib=libc++\" && CMAKE_EXE_LINKER_FLAGS=-lc++abi"
+
+before_script:
+- eval "${MATRIX_EVAL}"
+- travis/install_cmake.sh
+- if [[ $CXX = clang++ ]]; then travis/install_clang.sh; fi
+
+script:
+- cmake -E make_directory build
+- cmake -E chdir build cmake .. -DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
+- cmake --build build
+
+notifications:
+  email: false
