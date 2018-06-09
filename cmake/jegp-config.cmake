@@ -1,3 +1,5 @@
-find_package(range-v3 0.3.6 REQUIRED)
+include(CMakeFindDependencyMacro)
+
+find_dependency(range-v3 0.3.6)
 
 include(${CMAKE_CURRENT_LIST_DIR}/jegp-targets.cmake)

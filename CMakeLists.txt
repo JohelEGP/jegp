@@ -27,8 +27,10 @@ write_basic_package_version_file(jegp-config-version.cmake
 install(EXPORT jegp-targets
     DESTINATION lib/cmake/jegp
     NAMESPACE jegp)
-install(FILES cmake/jegp-config.cmake DESTINATION lib/cmake/jegp)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jegp-config-version.cmake
+install(
+    FILES
+        cmake/jegp-config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/jegp-config-version.cmake
     DESTINATION lib/cmake/jegp)
 install(DIRECTORY include/ DESTINATION include)
 
