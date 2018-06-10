@@ -5,7 +5,8 @@ Generic library components for my C++ projects.
 ## Specification
 
 This project uses [Semantic Versioning 2.0.0](http://semver.org/).
-The public API is in the code's `///` line comments.
+The public API is in the [doc](doc) directory,
+starting at [doc/intro.md](doc/intro.md).
 
 ## Getting started
 
