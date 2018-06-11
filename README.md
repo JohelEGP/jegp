@@ -8,6 +8,10 @@ This project uses [Semantic Versioning 2.0.0](http://semver.org/).
 The public API is in the [doc](doc) directory,
 starting at [doc/intro.md](doc/intro.md).
 
+### JEGP library compatibility
+
+TDB.
+
 ## Getting started
 
 JEGP is a header-only library.
