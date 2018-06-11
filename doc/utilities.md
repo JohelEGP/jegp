@@ -88,17 +88,17 @@ template <>
 struct hash<Point> {
     std::size_t operator()(Point pt) const
     {
-        return mia::hash_combine(pt.x, pt.y);
+        return jegp::hash_combine(pt.x, pt.y);
     }
 };
 
 template <class T>
 struct hash<Pair<T>> : private hash<T> {
     constexpr auto operator()(const Pair<T>& p) const
-        noexcept(noexcept(mia::hash_combine(p.first, p.second)))
-            -> decltype(mia::hash_combine(p.first, p.second))
+        noexcept(noexcept(jegp::hash_combine(p.first, p.second)))
+            -> decltype(jegp::hash_combine(p.first, p.second))
     {
-        return mia::hash_combine(p.first, p.second);
+        return jegp::hash_combine(p.first, p.second);
     }
 };
 
