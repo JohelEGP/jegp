@@ -27,6 +27,10 @@ inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
 template <class Enum>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
 
+// \[static.downcast], `static_downcast`
+template <class Derived, class Base>
+constexpr Derived static_downcast(Base&& b) noexcept;
+
 // \[hash.combine], `hash_combine`
 template <class... Args>
 constexpr std::size_t hash_combine(const Args&... args) noexcept(/*see below*/);
@@ -44,6 +48,26 @@ _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
 
 _Remarks:_ This function shall not participate in overload resolution
 unless `std::is_enum_v<Enum>` is `true`.
+
+### `static_downcast` \[static.downcast]
+
+A statically constrained `static_cast`
+that ensures it does a downcast.
+\[ _Note:_ If `b` isn't a base class subobject of type `Derived`,
+the behaviour is undefined. -- _end note_ ]
+
+```C++
+template <class Derived, class Base>
+constexpr Derived static_downcast(Base&& b) noexcept;
+```
+_Returns:_ `static_cast<Derived>(std::forward<Base>(b))`.
+
+_Remarks:_ This function shall not participate in overload resolution
+unless `std::is_reference_v<Derived>` is `true` and
+`std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>>` is `false` and
+`ranges::DerivedFrom<std::remove_reference_t<Derived>,
+std::remove_reference_t<Base>>()` is `true` and
+the expression in the _Returns:_ element is well-formed.
 
 ### `hash_combine` \[hash.combine]
 

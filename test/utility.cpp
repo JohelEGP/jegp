@@ -3,7 +3,10 @@
 #include <experimental/type_traits>
 #include <functional>
 #include <utility>
+#include <range/v3/utility/concepts.hpp>
 #include <jegp/utility.hpp>
+
+// \[hash.combine]
 
 namespace {
 
@@ -92,9 +95,87 @@ constexpr void test_hash_combine()
     assert(seed == jegp::hash_combine(x[0], x[1], x[2]));
 }
 
+// \[static.downcast]
+
+template <class Derived, class Base>
+using static_downcast_t =
+    decltype(jegp::static_downcast<Derived>(std::declval<Base>()));
+
+template <class Derived, class Base>
+constexpr bool is_static_downcastable{
+    std::experimental::is_detected_v<static_downcast_t, Derived, Base>};
+
+template <class Derived, class Base>
+constexpr bool is_static_downcast_assertable{
+    std::is_same_v<Derived, std::decay_t<Derived>> &&
+    std::is_same_v<Base, std::decay_t<Base>> &&
+    !std::is_same_v<Derived, Base> && std::is_base_of_v<Base, Derived>};
+
+template <
+    class Derived, class Base, bool ExpectedToPass = true,
+    CONCEPT_REQUIRES_(is_static_downcast_assertable<Derived, Base>)>
+constexpr void assert_is_static_downcastable()
+{
+    auto ok = [](bool b) { return b == ExpectedToPass; };
+
+    static_assert(ok(is_static_downcastable<Derived&, Base&>));
+    static_assert(ok(is_static_downcastable<const Derived&, Base&>));
+    static_assert(ok(is_static_downcastable<Derived&&, Base&>));
+    static_assert(ok(is_static_downcastable<const Derived&&, Base&>));
+
+    static_assert(!is_static_downcastable<Derived&, const Base&>);
+    static_assert(ok(is_static_downcastable<const Derived&, const Base&>));
+    static_assert(!is_static_downcastable<Derived&&, const Base&>);
+    static_assert(ok(is_static_downcastable<const Derived&&, const Base&>));
+
+    static_assert(!is_static_downcastable<Derived&, Base>);
+    static_assert(!is_static_downcastable<const Derived&, Base>);
+    static_assert(ok(is_static_downcastable<Derived&&, Base>));
+    static_assert(ok(is_static_downcastable<const Derived&&, Base>));
+
+    static_assert(!is_static_downcastable<Derived&, const Base>);
+    static_assert(!is_static_downcastable<const Derived&, const Base>);
+    static_assert(!is_static_downcastable<Derived&&, const Base>);
+    static_assert(ok(is_static_downcastable<const Derived&&, const Base>));
+
+    static_assert(!is_static_downcastable<Derived, Base&>);
+    static_assert(!is_static_downcastable<Derived, const Base&>);
+    static_assert(!is_static_downcastable<Derived, Base>);
+    static_assert(!is_static_downcastable<Derived, const Base>);
+}
+
+constexpr void test_static_downcast()
+{
+    struct B {
+    };
+
+    struct D : B {
+    };
+
+    assert_is_static_downcastable<D, B>();
+
+    struct D2 : private B {
+    };
+
+    assert_is_static_downcastable<D2, B, false>();
+
+    struct D3
+      : D
+      , B {
+    };
+
+    assert_is_static_downcastable<D3, B, false>();
+
+    struct D4 : virtual B {
+    };
+
+    assert_is_static_downcastable<D4, B, false>();
+}
+
 constexpr int test()
 {
     test_hash_combine();
+    test_static_downcast();
     return 0;
 }
 
