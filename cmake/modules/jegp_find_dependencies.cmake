@@ -1,10 +1,11 @@
+include(FetchContent)
+
+FetchContent_Declare(range-v3
+    GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
+    GIT_SHALLOW True)
+
 find_package(range-v3 0.3.6 QUIET)
 if(NOT range-v3_FOUND)
-    include(FetchContent)
-
-    FetchContent_Declare(range-v3
-        GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
-        GIT_SHALLOW True)
     FetchContent_GetProperties(range-v3)
     if(NOT range-v3_POPULATED)
         FetchContent_Populate(range-v3)
