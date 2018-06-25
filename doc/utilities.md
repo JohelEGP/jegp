@@ -63,11 +63,11 @@ constexpr Derived static_downcast(Base&& b) noexcept;
 _Returns:_ `static_cast<Derived>(std::forward<Base>(b))`.
 
 _Remarks:_ This function shall not participate in overload resolution
-unless `std::is_reference_v<Derived>` is `true` and
-`std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>>` is `false` and
-`ranges::DerivedFrom<std::remove_reference_t<Derived>,
-std::remove_reference_t<Base>>()` is `true` and
-the expression in the _Returns:_ element is well-formed.
+unless `std::is_reference_v<Derived>` is `true`
+and `std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>>` is `false`
+and `ranges::DerivedFrom<std::remove_reference_t<Derived>,
+std::remove_reference_t<Base>>()` is `true`
+and the expression in the _Returns:_ element is well-formed.
 
 ### `hash_combine` \[hash.combine]
 
@@ -90,8 +90,8 @@ return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 _Remarks:_ The expression inside `noexcept` is equivalent to
 the logical AND of `noexcept(std::hash<Args>{}(args))` for all `Args`.
 This function shall not participate in overload resolution
-unless `sizeof...(Args) >= 2` is `true` and
-`std::hash<Args>` is enabled for all `Args`.
+unless `sizeof...(Args) >= 2`
+and `std::hash<Args>` is enabled for all `Args`.
 
 \[ _Example:_
 ```C++

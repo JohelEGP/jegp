@@ -43,8 +43,8 @@ means that the tests passed.
 
 The JEGP library doesn't impose how it can become a dependency.
 You can use `find_package` (if installed or by defining `jegp_DIR`),
-`add_subdirectory` (to an existing clone or a git submodule), and,
-by extension, `FetchContent` and `ExternalProject`.
+`add_subdirectory` (to an existing clone or a git submodule),
+and, by extension, `FetchContent` and `ExternalProject`.
 The simplest way is installing it so that it can be used like:
 
     find_package(jegp)

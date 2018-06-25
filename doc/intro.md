@@ -14,13 +14,18 @@ ISO/IEC 14882 is herein called the _C++ Standard_.
 
 ## General \[intro.general]
 
-The library specification subsumes the [C++ Standard's](\[C++IS:library]),
+The library specification
+subsumes the C++ Standard's \[library],
 assumingly amended to the context of this library.
-\[ _Example:_ Per \[C++IS:namespace.future], `::jegp2` is reserved.
-Per \[C++IS:contents]#3, a name `x` means `::jegp::x`. -- _end example_ ]
+\[ _Example:_
+Per C++ Standard's \[namespace.future], `::jegp2` is reserved.
+Per C++ Standard's \[contents]#3, a name `x` means `::jegp::x`.
+-- _end example_ ]
 
-[Range v3](https://github.com/ericniebler/range-v3)
-is used to emulate concepts.
+[Range v3] is used
+to emulate concepts.
+
+[Range v3]: https://github.com/ericniebler/range-v3
 
 Table \[intro.general] -- Library categories
 
@@ -32,7 +37,8 @@ Table \[intro.general] -- Library categories
 
 ### Library contents \[contents]
 
-Whenever a name is qualified with `X::`, `::X::` is meant,
+Whenever a name is qualified with `X::`,
+`::X::` is meant,
 where `X` is any identifier.
 
 ### Reserved names \[reserved.names]
