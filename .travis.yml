@@ -39,7 +39,7 @@ before_script:
 script:
 - cmake -E make_directory build
 - cmake -E chdir build cmake .. -DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
-- cmake --build build -j 2
+- cmake -G Ninja --build build -j 2
 
 notifications:
   email: false
