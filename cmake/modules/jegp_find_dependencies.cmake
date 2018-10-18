@@ -6,7 +6,7 @@ FetchContent_Declare(range-v3
 
 FetchContent_GetProperties(range-v3)
 if(NOT range-v3_POPULATED)
-    find_package(range-v3 0.3.6 QUIET)
+    find_package(range-v3 0.4.0 QUIET)
     if(NOT range-v3_FOUND)
         FetchContent_Populate(range-v3)
         add_subdirectory(${range-v3_SOURCE_DIR} ${range-v3_BINARY_DIR})
