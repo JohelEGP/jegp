@@ -44,12 +44,19 @@ matrix:
   - os: linux
     env:
     - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=7.0.0"
+  - os: osx
+    compiler: clang
+    addons:
+      homebrew:
+        packages:
+        - cmake
+        update: true
 
 before_script:
 - eval "${MATRIX_EVAL}"
-- travis/install_cmake.sh
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh; fi
 - |
-  if [[ -v LIBCXX_VERSION ]]; then
+  if [ -n "$LIBCXX_VERSION" ]; then
     travis/install_clang.sh ${LIBCXX_VERSION}
     CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
     CMAKE_EXE_LINKER_FLAGS=-lc++abi
