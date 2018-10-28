@@ -1,7 +1,7 @@
 #!/bin/sh
 set -ev
 
-clang_version=6.0.0
+clang_version=$1
 clang_archive=clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 
 cd /tmp

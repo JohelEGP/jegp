@@ -29,12 +29,17 @@ matrix:
     - MATRIX_EVAL="CXX=clang++-6.0"
   - os: linux
     env:
-    - MATRIX_EVAL="CXX=clang++ && CMAKE_CXX_FLAGS=\"$CMAKE_CXX_FLAGS -stdlib=libc++\" && CMAKE_EXE_LINKER_FLAGS=-lc++abi"
+    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
 
 before_script:
 - eval "${MATRIX_EVAL}"
 - travis/install_cmake.sh
-- if [[ $CXX = clang++ ]]; then travis/install_clang.sh; fi
+- |
+  if [[ -v LIBCXX_VERSION ]]; then
+    travis/install_clang.sh ${LIBCXX_VERSION}
+    CMAKE_CXX_FLAGS=-stdlib=libc++
+    CMAKE_EXE_LINKER_FLAGS=-lc++abi
+  fi
 
 script:
 - cmake -E make_directory build
