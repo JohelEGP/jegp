@@ -37,10 +37,10 @@ matrix:
         - llvm-toolchain-trusty-7
         - ubuntu-toolchain-r-test
         packages:
-        - clang-7.0
+        - clang-7
         - g++-8
     env:
-    - MATRIX_EVAL="CXX=clang++-7.0"
+    - MATRIX_EVAL="CXX=clang++"
   - os: linux
     env:
     - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=7.0.0"
