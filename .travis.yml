@@ -30,6 +30,20 @@ matrix:
   - os: linux
     env:
     - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - llvm-toolchain-trusty-7.0
+        - ubuntu-toolchain-r-test
+        packages:
+        - clang-7.0
+        - g++-8
+    env:
+    - MATRIX_EVAL="CXX=clang++-7.0"
+  - os: linux
+    env:
+    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=7.0.0"
 
 before_script:
 - eval "${MATRIX_EVAL}"
