@@ -1,4 +1,6 @@
 #!/bin/sh
+# Usage: ./install_clang.sh <clang_version>
+# <clang_version> is a semver of the form X.Y.Z
 set -ev
 
 clang_version=$1
