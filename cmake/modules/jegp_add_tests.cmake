@@ -12,4 +12,5 @@ endfunction()
 jegp_add_test(include_utility)
 jegp_add_test(all_includes)
 jegp_add_test(utility
-    $<$<CXX_COMPILER_ID:Clang>:-Wno-missing-braces -Wno-inaccessible-base>)
+    $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
+        -Wno-missing-braces -Wno-inaccessible-base>)
