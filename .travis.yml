@@ -14,7 +14,8 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - g++-8
-    env: CXX=g++-8
+    env:
+    - MATRIX_EVAL="CXX=g++-8"
   - os: linux
     addons:
       apt:
@@ -24,9 +25,11 @@ matrix:
         packages:
         - clang-6.0
         - g++-8
-    env: CXX=clang++-6.0
+    env:
+    - MATRIX_EVAL="CXX=clang++-6.0"
   - os: linux
-    env: CXX=clang++ LIBCXX_VERSION=6.0.0
+    env:
+    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
   - os: linux
     addons:
       apt:
@@ -36,9 +39,11 @@ matrix:
         packages:
         - clang-7
         - g++-8
-    env: CXX=clang++
+    env:
+    - MATRIX_EVAL="CXX=clang++"
   - os: linux
-    env: CXX=clang++ LIBCXX_VERSION=7.0.0
+    env:
+    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=7.0.0"
   - os: osx
     compiler: clang
     addons:
@@ -48,6 +53,7 @@ matrix:
         update: true
 
 before_script:
+- eval "${MATRIX_EVAL}"
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh; fi
 - |
   if [ -n "$LIBCXX_VERSION" ]; then
