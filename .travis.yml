@@ -8,6 +8,13 @@ env:
 
 matrix:
   include:
+  - os: osx
+    compiler: clang
+    addons:
+      homebrew:
+        packages:
+        - cmake
+        update: true
   - os: linux
     addons:
       apt:
@@ -41,13 +48,6 @@ matrix:
     compiler: clang
     env:
     - MATRIX_EVAL="LIBCXX_VERSION=7.0.0"
-  - os: osx
-    compiler: clang
-    addons:
-      homebrew:
-        packages:
-        - cmake
-        update: true
 
 before_script:
 - eval "${MATRIX_EVAL}"
