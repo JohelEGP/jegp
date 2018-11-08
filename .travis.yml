@@ -16,6 +16,15 @@ matrix:
         - cmake
         update: true
   - os: linux
+    compiler: gcc
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-8
+  - os: linux
+    compiler: clang
     addons:
       apt:
         sources:
@@ -23,19 +32,11 @@ matrix:
         packages:
         - g++-8
     env:
-    - MATRIX_EVAL="CXX=g++-8"
+    - MATRIX_EVAL="CLANG_VERSION=6.0.0"
   - os: linux
-    addons:
-      apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        packages:
-        - g++-8
+    compiler: clang
     env:
-    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0 && USE_LIBSTDCXX=1"
-  - os: linux
-    env:
-    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
+    - MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
   - os: linux
     compiler: clang
     addons:
@@ -47,19 +48,17 @@ matrix:
   - os: linux
     compiler: clang
     env:
-    - MATRIX_EVAL="LIBCXX_VERSION=7.0.0"
+    - MATRIX_EVAL="USE_LIBCXX=1"
 
 before_script:
 - eval "${MATRIX_EVAL}"
 - |
-  if [ -n "$LIBCXX_VERSION" ]; then
-    if [ "$LIBCXX_VERSION" != "7.0.0" ]; then
-      travis/install_clang.sh ${LIBCXX_VERSION}
-    fi
-    if [ -z "$USE_LIBSTDCXX" ]; then
-      CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
-      CMAKE_EXE_LINKER_FLAGS=-lc++abi
-    fi
+  if [ -n "$CLANG_VERSION" ]; then
+    travis/install_clang.sh ${LIBCXX_VERSION}
+  fi
+  if [ -n "$USE_LIBCXX" ]; then
+    CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
+    CMAKE_EXE_LINKER_FLAGS=-lc++abi
   fi
 
 script:
