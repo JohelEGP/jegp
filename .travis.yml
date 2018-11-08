@@ -32,7 +32,7 @@ matrix:
         packages:
         - g++-8
     env:
-    - MATRIX_EVAL="CXX=clang++-6.0 && LIBCXX_VERSION=6.0.0 && USE_LIBSTDCXX=1"
+    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0 && USE_LIBSTDCXX=1"
   - os: linux
     env:
     - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
@@ -56,7 +56,7 @@ before_script:
     if [ "$LIBCXX_VERSION" != "7.0.0" ]; then
       travis/install_clang.sh ${LIBCXX_VERSION}
     fi
-    if [ -n "$USE_LIBSTDCXX" ]; then
+    if [ -z "$USE_LIBSTDCXX" ]; then
       CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
       CMAKE_EXE_LINKER_FLAGS=-lc++abi
     fi
