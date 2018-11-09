@@ -58,6 +58,7 @@ before_script:
   if [ -n "$CLANG_VERSION" ]; then
     travis/install_clang.sh ${CLANG_VERSION}
   fi
+- |
   if [ -n "$USE_LIBCXX" ]; then
     CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
     CMAKE_EXE_LINKER_FLAGS=-lc++abi
