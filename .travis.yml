@@ -1,4 +1,5 @@
 language: cpp
+dist: xenial
 
 env:
   global:
@@ -7,7 +8,15 @@ env:
 
 matrix:
   include:
+  - os: osx
+    compiler: clang
+    addons:
+      homebrew:
+        packages:
+        - cmake
+        update: true
   - os: linux
+    compiler: gcc
     addons:
       apt:
         sources:
@@ -17,47 +26,39 @@ matrix:
     env:
     - MATRIX_EVAL="CXX=g++-8"
   - os: linux
-    addons:
-      apt:
-        sources:
-        - llvm-toolchain-trusty-6.0
-        - ubuntu-toolchain-r-test
-        packages:
-        - clang-6.0
-        - g++-8
-    env:
-    - MATRIX_EVAL="CXX=clang++-6.0"
-  - os: linux
-    env:
-    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=6.0.0"
-  - os: linux
-    addons:
-      apt:
-        sources:
-        - llvm-toolchain-trusty-7
-        - ubuntu-toolchain-r-test
-        packages:
-        - clang-7
-        - g++-8
-    env:
-    - MATRIX_EVAL="CXX=clang++"
-  - os: linux
-    env:
-    - MATRIX_EVAL="CXX=clang++ && LIBCXX_VERSION=7.0.0"
-  - os: osx
     compiler: clang
     addons:
-      homebrew:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
         packages:
-        - cmake
-        update: true
+        - g++-8
+    env:
+    - MATRIX_EVAL="CLANG_VERSION=6.0.0"
+  - os: linux
+    compiler: clang
+    env:
+    - MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
+  - os: linux
+    compiler: clang
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-8
+  - os: linux
+    compiler: clang
+    env:
+    - MATRIX_EVAL="USE_LIBCXX=1"
 
 before_script:
 - eval "${MATRIX_EVAL}"
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh; fi
 - |
-  if [ -n "$LIBCXX_VERSION" ]; then
-    travis/install_clang.sh ${LIBCXX_VERSION}
+  if [ -n "$CLANG_VERSION" ]; then
+    travis/install_clang.sh ${CLANG_VERSION}
+  fi
+  if [ -n "$USE_LIBCXX" ]; then
     CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
     CMAKE_EXE_LINKER_FLAGS=-lc++abi
   fi
