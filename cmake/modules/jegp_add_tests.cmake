@@ -1,7 +1,3 @@
-if(NOT BUILD_TESTING)
-    return()
-endif()
-
 function(jegp_add_test name)
     add_executable(jegp_test_${name} test/${name}.cpp)
     target_compile_options(jegp_test_${name} PRIVATE ${ARGN})

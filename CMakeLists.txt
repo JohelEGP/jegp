@@ -35,4 +35,6 @@ install(
 install(DIRECTORY include/ DESTINATION include)
 
 include(CTest)
-include(jegp_add_tests)
+if(BUILD_TESTING)
+    include(jegp_add_tests)
+endif()
