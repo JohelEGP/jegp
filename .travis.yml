@@ -4,7 +4,7 @@ dist: xenial
 env:
   global:
   - PATH=/tmp/bin:$PATH
-  - CMAKE_CXX_FLAGS="-Wpedantic -Wall -Wextra"
+  - CXXFLAGS="-Wpedantic -Wall -Wextra"
 
 matrix:
   include:
@@ -56,13 +56,13 @@ before_script:
   fi
 - |
   if [ -n "$USE_LIBCXX" ]; then
-    CMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -stdlib=libc++"
+    CXXFLAGS="$CXXFLAGS -stdlib=libc++"
     CMAKE_EXE_LINKER_FLAGS=-lc++abi
   fi
 
 script:
 - cmake -E make_directory build
-- cmake -E chdir build cmake .. -DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS" -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
+- cmake -E chdir build cmake .. -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
 - cmake --build build -j 2
 
 notifications:
