@@ -36,5 +36,5 @@ install(DIRECTORY include/ DESTINATION include)
 
 include(CTest)
 if(BUILD_TESTING)
-    include(jegp_add_tests)
+    add_subdirectory(test)
 endif()

@@ -1,5 +1,5 @@
 function(jegp_add_test name)
-    add_executable(jegp_test_${name} test/${name}.cpp)
+    add_executable(jegp_test_${name} ${name}.cpp)
     target_compile_options(jegp_test_${name} PRIVATE ${ARGN})
     target_link_libraries(jegp_test_${name} PRIVATE jegp::jegp)
 #    add_test(jegp_test_${name} jegp_test_${name})
