@@ -3,7 +3,6 @@
 #include <experimental/type_traits>
 #include <functional>
 #include <utility>
-#include <range/v3/utility/concepts.hpp>
 #include <jegp/utility.hpp>
 
 // \[hash.combine]
@@ -113,7 +112,7 @@ constexpr bool is_static_downcast_assertable{
 
 template <
     class Derived, class Base, bool ExpectedToPass = true,
-    CONCEPT_REQUIRES_(is_static_downcast_assertable<Derived, Base>)>
+    std::enable_if_t<is_static_downcast_assertable<Derived, Base>>* = nullptr>
 constexpr void assert_is_static_downcastable()
 {
     auto ok = [](bool b) { return b == ExpectedToPass; };
@@ -159,9 +158,7 @@ constexpr void test_static_downcast()
 
     assert_is_static_downcastable<D2, B, false>();
 
-    struct D3
-      : D
-      , B {
+    struct D3 : D, B {
     };
 
     assert_is_static_downcastable<D3, B, false>();
