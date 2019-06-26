@@ -1,4 +1,4 @@
-# Clang 7
+# Clang 8
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: true
@@ -8,7 +8,7 @@ AlignOperands: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
@@ -18,7 +18,7 @@ AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: true
 BinPackParameters: true
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Stroustrup
+BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: BeforeColon
@@ -33,18 +33,8 @@ DisableFormat: false
 FixNamespaceComments: true
 IncludeBlocks: Merge
 IncludeCategories:
-    -   Regex:      '<(experimental/(ranges/)?)?[a-z_]+>' # Standard library
+    -   Regex:      '<[a-z_]+>' # C++ standard library
         Priority:   1
-    -   Regex:      '<gsl/'
-        Priority:   2
-    -   Regex:      '<boost/'
-        Priority:   3
-    -   Regex:      '<range/v3/'
-        Priority:   4
-    -   Regex:      '<jegp/'
-        Priority:   6
-    -   Regex:      '<.*' # Others
-        Priority:   5
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
 IndentWidth: 4
@@ -53,7 +43,7 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 Language: Cpp
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: Inner
-PenaltyReturnTypeOnItsOwnLine: 35357
+PenaltyReturnTypeOnItsOwnLine: 9000
 PointerAlignment: Left
 ReflowComments: true
 SortIncludes: true

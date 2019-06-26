@@ -8,8 +8,8 @@
 #include <utility>
 #include <concepts/concepts.hpp>
 
-namespace jegp {
-
+namespace jegp
+{
 template <class T>
 inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
 

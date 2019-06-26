@@ -1,30 +1,34 @@
 #include <cassert>
 #include <cstddef>
-#include <experimental/type_traits>
 #include <functional>
 #include <utility>
+#include <experimental/type_traits>
 #include <jegp/utility.hpp>
 
 // \[hash.combine]
 
-namespace {
-
-struct X {
+namespace
+{
+struct X
+{
     int v;
 };
 
-struct Y {
+struct Y
+{
 };
 
-struct Z {
+struct Z
+{
 };
 
 } // namespace
 
-namespace std {
-
+namespace std
+{
 template <>
-struct hash<X> {
+struct hash<X>
+{
     constexpr std::size_t operator()(X x) const noexcept
     {
         return x.v;
@@ -32,7 +36,8 @@ struct hash<X> {
 };
 
 template <>
-struct hash<Y> {
+struct hash<Y>
+{
     std::size_t operator()(Y) const
     {
         return 0;
@@ -40,13 +45,14 @@ struct hash<Y> {
 };
 
 template <>
-struct hash<Z> : hash<void> {
+struct hash<Z> : hash<void>
+{
 };
 
 } // namespace std
 
-namespace {
-
+namespace
+{
 template <class... Args>
 using hash_combine_t = decltype(jegp::hash_combine(std::declval<Args>()...));
 
@@ -145,25 +151,30 @@ constexpr void assert_is_static_downcastable()
 
 constexpr void test_static_downcast()
 {
-    struct B {
+    struct B
+    {
     };
 
-    struct D : B {
+    struct D : B
+    {
     };
 
     assert_is_static_downcastable<D, B>();
 
-    struct D2 : private B {
+    struct D2 : private B
+    {
     };
 
     assert_is_static_downcastable<D2, B, false>();
 
-    struct D3 : D, B {
+    struct D3 : D, B
+    {
     };
 
     assert_is_static_downcastable<D3, B, false>();
 
-    struct D4 : virtual B {
+    struct D4 : virtual B
+    {
     };
 
     assert_is_static_downcastable<D4, B, false>();
