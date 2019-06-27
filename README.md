@@ -10,7 +10,7 @@ starting at [doc/intro.md](doc/intro.md).
 
 ### JEGP library compatibility
 
-TDB.
+TBD.
 
 ## Getting started
 
