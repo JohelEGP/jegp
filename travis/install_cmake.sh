@@ -1,10 +1,10 @@
 #!/bin/sh
+# Usage: ./install_cmake.sh <cmake_version>
+# <cmake_version> is a semver of the form X.Y.Z[pre-release version]
 set -ev
 
-cmake_version=3.14
-cmake_patch=5
-cmake_pre=
-cmake_installer=cmake-${cmake_version}.${cmake_patch}${cmake_pre}-Linux-x86_64.sh
+cmake_version=$1
+cmake_installer=cmake-${cmake_version}-Linux-x86_64.sh
 
 cd /tmp
 wget https://cmake.org/files/v${cmake_version}/${cmake_installer}
