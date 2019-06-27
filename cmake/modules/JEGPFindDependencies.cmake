@@ -10,5 +10,4 @@ FetchContent_Declare(range-v3
 
 FetchContent_MakeAvailable(range-v3 jegp_cmake_modules)
 
-FetchContent_GetProperties(jegp_cmake_modules)
 list(APPEND CMAKE_MODULE_PATH "${jegp_cmake_modules_SOURCE_DIR}")
