@@ -15,10 +15,8 @@ target_link_libraries(jegp INTERFACE range-v3)
 
 install(TARGETS jegp EXPORT jegp-targets)
 
-if(JEGP_DEPENDENCIES_IMPORTED)
-    export(EXPORT jegp-targets NAMESPACE jegp::)
-    file(COPY cmake/jegp-config.cmake DESTINATION .)
-endif()
+export(EXPORT jegp-targets NAMESPACE jegp::)
+file(COPY cmake/jegp-config.cmake DESTINATION .)
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(jegp-config-version.cmake
     VERSION ${jegp_VERSION}

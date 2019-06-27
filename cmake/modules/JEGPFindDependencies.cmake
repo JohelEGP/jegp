@@ -12,7 +12,3 @@ FetchContent_MakeAvailable(range-v3 jegp_cmake_modules)
 
 FetchContent_GetProperties(jegp_cmake_modules)
 list(APPEND CMAKE_MODULE_PATH "${jegp_cmake_modules_SOURCE_DIR}")
-
-if(range-v3_FOUND)
-    set(JEGP_DEPENDENCIES_IMPORTED TRUE)
-endif()
