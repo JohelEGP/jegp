@@ -3,7 +3,7 @@ project(jegp VERSION 4.0.0 LANGUAGES CXX)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
 
-include(jegp_find_dependencies)
+include(JEGPFindDependencies)
 
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)
