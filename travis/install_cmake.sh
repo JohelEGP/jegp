@@ -1,8 +1,8 @@
 #!/bin/sh
 set -ev
 
-cmake_version=3.12
-cmake_patch=0
+cmake_version=3.14
+cmake_patch=5
 cmake_pre=
 cmake_installer=cmake-${cmake_version}.${cmake_patch}${cmake_pre}-Linux-x86_64.sh
 
