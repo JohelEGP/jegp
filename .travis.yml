@@ -35,7 +35,7 @@ matrix:
     env: MATRIX_EVAL="CXX=g++-9"
   - os: linux
     compiler: clang
-    addons: &libstdc++-8
+    addons: &libstdcxx8
       apt:
         sources:
         - ubuntu-toolchain-r-test
@@ -47,13 +47,13 @@ matrix:
     env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
   - os: linux
     compiler: clang
-    addons: *libstdc++-8
+    addons: *libstdcxx8
   - os: linux
     compiler: clang
     env: MATRIX_EVAL="USE_LIBCXX=1"
   - os: linux
     compiler: clang
-    addons: *libstdc++-8
+    addons: *libstdcxx8
     env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
   - os: linux
     compiler: clang
