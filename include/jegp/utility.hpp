@@ -32,7 +32,7 @@ template <
     std::enable_if_t<
         std::is_reference_v<Derived> &&
         !std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>> &&
-        concepts::DerivedFrom<
+        concepts::derived_from<
             std::remove_reference_t<Derived>, std::remove_reference_t<Base>>>* =
         nullptr>
 constexpr auto static_downcast(Base&& b) noexcept
