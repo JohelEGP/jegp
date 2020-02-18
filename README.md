@@ -1,51 +1,49 @@
 # JEGP
 
-Generic library components for my C++ projects.
+Generic library components for JohelEGP's C++ projects.
 
-## Specification
+## Documentation
 
-This project uses [Semantic Versioning 2.0.0](http://semver.org/).
-The public API is in the [doc](doc) directory,
-starting at [doc/intro.md](doc/intro.md).
+The public API is in [doc/](doc/).
+It abides to [Semantic Versioning 2.0.0](https://semver.org/),
+with the versions being [git tags](
+https://github.com/johelegp/jegp/releases).
 
-### JEGP library compatibility
+### Compatibility
 
-TBD.
+[SD-8][] states the rights the API reserves for itself.
 
-## Getting started
+[SD-8]:
+https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility
+"SD-8: Standard Library Compatibility"
 
-JEGP is a header-only library.
-[CMake](#cmake) is the primary way of depending on it.
+No guarantee of ABI stability are made.
 
-### Dependencies
+## [CMake][] buildsystem
 
-This project uses C++17.
-CMake takes care of the following missing dependencies.
+[CMake]: https://cmake.org/
 
-- [Range v3](https://github.com/ericniebler/range-v3)
+The project's name is `jegp`.
+The library's target is `jegp::jegp`.
 
-### Installation
+### Options
 
-Execute these commands from the root of your project's clone
-to configure, build and install the library:
+| Option      | Description                       | Default value |
+| ----------- | --------------------------------- | ------------- |
+| `JEGP_TEST` | Whether to test the JEGP library. | `OFF`         |
 
-    cmake -E make_directory build
-    cmake -E chdir build cmake ..
-    cmake --build build --target install
+### Build, test, install
 
-### Testing
+Run [these commands](
+https://gist.github.com/johelegp/65cbb2ffdb815c8ebce22ae847ab76b1
+"How to portably build, test and install modern CMake projects")
+(reproduced below)
+from the root of your project's clone.
 
-All testing is done at compile-time.
-The lack of compile-time errors after building the library
-means that the tests passed.
-
-### CMake
-
-The JEGP library doesn't impose how it can become a dependency.
-You can use `find_package` (if installed or by defining `jegp_DIR`),
-`add_subdirectory` (to an existing clone or a git submodule),
-and, by extension, `FetchContent` and `ExternalProject`.
-The simplest way is installing it so that it can be used like:
-
-    find_package(jegp)
-    target_link_libraries(<your_target> jegp::jegp)
+```
+cmake -E make_directory build
+cmake -E chdir build cmake .. -DJEGP_TEST
+cmake --build build
+cmake -E chdir build ctest
+cmake --build build --target install
+```

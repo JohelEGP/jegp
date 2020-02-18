@@ -1,17 +1,21 @@
 cmake_minimum_required(VERSION 3.14.0)
-project(jegp VERSION 4.0.0 LANGUAGES CXX)
+project(jegp
+    VERSION 4.0.0
+    DESCRIPTION "Generic library components for JohelEGP's C++ projects."
+    HOMEPAGE_URL https://github.com/johelegp/jegp
+    LANGUAGES CXX)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
-
+include(JEGPOptions)
 include(JEGPFindDependencies)
 
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)
+target_compile_features(jegp INTERFACE cxx_std_17)
+target_link_libraries(jegp INTERFACE range-v3::range-v3)
 target_include_directories(jegp INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
-target_compile_features(jegp INTERFACE cxx_std_17)
-target_link_libraries(jegp INTERFACE range-v3)
 
 install(TARGETS jegp EXPORT jegp-targets)
 
@@ -33,6 +37,6 @@ install(
 install(DIRECTORY include/ DESTINATION include)
 
 include(CTest)
-if(BUILD_TESTING)
+if(BUILD_TESTING AND JEGP_TEST)
     add_subdirectory(test)
 endif()
