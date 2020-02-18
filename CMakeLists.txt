@@ -5,7 +5,7 @@ project(jegp
     HOMEPAGE_URL https://github.com/johelegp/jegp
     LANGUAGES CXX)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 include(JEGPOptions)
 include(JEGPFindDependencies)
 
