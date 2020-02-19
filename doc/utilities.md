@@ -1,41 +1,41 @@
-# General utilities library \[utilities]
+# General utilities library                                          [utilities]
 
-## General \[utilities.general]
+## General                                                   [utilities.general]
 
 This clause describes generally useful utilities.
-These utilities are summarized in Table \[utilities].
+These utilities are summarized in [tab:utilities.summary].
 
-Table \[utilities] -- General utilities library summary
+   General utilities library summary [tab:utilities.summary]
 
-|            | Subclause          | Header(s)            |
-| ---------- | ------------------ | -------------------- |
-| \[utility] | Utility components | `<jegp/utility.hpp>` |
+   |           | Subclause          | Header               |
+   | --------- | :----------------- | :------------------- |
+   | [utility] | Utility components | `<jegp/utility.hpp>` |
 
-## Utility components \[utility]
+## Utility components                                                  [utility]
 
-### Header `<jegp/utility.hpp>` synopsis \[utility.syn]
+### Header `<jegp/utility.hpp>` synopsis                           [utility.syn]
 
 This header contains some basic constructs.
 
 ```C++
 namespace jegp {
 
-// \[utility.underlying], `underlying`
+// [utility.underlying], `underlying`
 template <class Enum>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
 
-// \[static.downcast], `static_downcast`
+// [static.downcast], `static_downcast`
 template <class Derived, class Base>
 constexpr Derived static_downcast(Base&& b) noexcept;
 
-// \[hash.combine], `hash_combine`
+// [hash.combine], `hash_combine`
 template <class... Args>
 constexpr std::size_t hash_combine(const Args&... args) noexcept(/*see below*/);
 
 } // namespace jegp
 ```
 
-### `underlying` \[utility.underlying]
+### `underlying`                                            [utility.underlying]
 
 ```C++
 template <class Enum>
@@ -46,11 +46,11 @@ _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
 _Remarks:_ This function shall not participate in overload resolution
 unless `std::is_enum_v<Enum>` is `true`.
 
-### `static_downcast` \[static.downcast]
+### `static_downcast`                                          [static.downcast]
 
 A statically constrained `static_cast`
 that ensures it does a downcast.
-\[ _Note:_ If `b` isn't a base class subobject of type `Derived`,
+[ _Note:_ If `b` isn't a base class subobject of type `Derived`,
 the behaviour is undefined. -- _end note_ ]
 
 ```C++
@@ -66,7 +66,7 @@ and `ranges::DerivedFrom<std::remove_reference_t<Derived>,
 std::remove_reference_t<Base>>()` is `true`
 and the expression in the _Returns:_ element is well-formed.
 
-### `hash_combine` \[hash.combine]
+### `hash_combine`                                                [hash.combine]
 
 Insipred by [Boost.ContainerHash].
 Useful in the specializations of `std::hash`
@@ -90,7 +90,7 @@ This function shall not participate in overload resolution
 unless `sizeof...(Args) >= 2`
 and `std::hash<Args>` is enabled for all `Args`.
 
-\[ _Example:_
+[ _Example:_
 ```C++
 struct Point {
     int x;
