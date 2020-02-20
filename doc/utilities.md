@@ -52,13 +52,14 @@ _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
 
 A statically constrained `static_cast`
 that ensures it does a downcast.
-[ _Note:_ If `b` isn't a base class subobject of type `DerivedRef`,
-the behaviour is undefined. -- _end note_ ]
 
 ```C++
 template <class DerivedRef, class Base>
 constexpr DerivedRef static_downcast(Base&& b) noexcept;
 ```
+_Requires:_ `b` is a base class subobject
+of an object of type `std::decay_t<DerivedRef>`.
+
 _Constraints:_
 - `std::is_reference_v<DerivedRef>` is `true`.
 - `std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>>` is `false`.
