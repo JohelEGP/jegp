@@ -23,7 +23,7 @@ template <class... Args, std::enable_if_t<sizeof...(Args) >= 2>* = nullptr>
 constexpr auto hash_combine(const Args&... args) noexcept(noexcept(
     (..., std::hash<Args>{}(args)))) -> decltype((..., std::hash<Args>{}(args)))
 {
-    std::size_t seed{};
+    std::size_t seed{0};
     return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 }
 

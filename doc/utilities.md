@@ -89,7 +89,7 @@ _Constraints:_
 
 _Effects:_ Equivalent to:
 ```C++
-std::size_t seed{};
+std::size_t seed{0};
 return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 ```
 _Remarks:_ The expression inside `noexcept` is equivalent to

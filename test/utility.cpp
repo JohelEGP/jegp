@@ -5,7 +5,7 @@
 #include <experimental/type_traits>
 #include <jegp/utility.hpp>
 
-// \[hash.combine]
+// [hash.combine]
 
 namespace
 {
@@ -88,7 +88,7 @@ constexpr void test_hash_combine()
 
     const X x[]{42, 17, -20};
 
-    std::size_t seed{};
+    std::size_t seed{0};
 
     seed ^= x[0].v;
     seed ^= x[1].v + (seed << 6) + (seed >> 2);
@@ -100,7 +100,7 @@ constexpr void test_hash_combine()
     assert(seed == jegp::hash_combine(x[0], x[1], x[2]));
 }
 
-// \[static.downcast]
+// [static.downcast]
 
 template <class Derived, class Base>
 using static_downcast_t =
