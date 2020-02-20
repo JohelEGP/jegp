@@ -106,9 +106,9 @@ template <class Derived, class Base>
 using static_downcast_t =
     decltype(jegp::static_downcast<Derived>(std::declval<Base>()));
 
-template <class Derived, class Base>
+template <class DerivedRef, class Base>
 constexpr bool is_static_downcastable{
-    std::experimental::is_detected_v<static_downcast_t, Derived, Base>};
+    std::experimental::is_detected_v<static_downcast_t, DerivedRef, Base>};
 
 template <class Derived, class Base>
 constexpr bool is_static_downcast_assertable{

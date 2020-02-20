@@ -28,17 +28,17 @@ constexpr auto hash_combine(const Args&... args) noexcept(noexcept(
 }
 
 template <
-    class Derived, class Base,
+    class DerivedRef, class Base,
     std::enable_if_t<
-        std::is_reference_v<Derived> &&
-        !std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>> &&
+        std::is_reference_v<DerivedRef> &&
+        !std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>> &&
         concepts::derived_from<
-            std::remove_reference_t<Derived>, std::remove_reference_t<Base>>>* =
-        nullptr>
+            std::remove_reference_t<DerivedRef>,
+            std::remove_reference_t<Base>>>* = nullptr>
 constexpr auto static_downcast(Base&& b) noexcept
-    -> decltype(static_cast<Derived>(std::forward<Base>(b)))
+    -> decltype(static_cast<DerivedRef>(std::forward<Base>(b)))
 {
-    return static_cast<Derived>(std::forward<Base>(b));
+    return static_cast<DerivedRef>(std::forward<Base>(b));
 }
 
 } // namespace jegp
