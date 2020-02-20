@@ -1,5 +1,5 @@
 language: cpp
-dist: xenial
+dist: bionic
 
 env:
   global:
@@ -17,19 +17,17 @@ matrix:
         update: true
   - os: linux
     compiler: gcc
-    addons: &gcc8
+    addons:
       apt:
-        sources:
-        - ubuntu-toolchain-r-test
         packages:
         - g++-8
     env: MATRIX_EVAL="CXX=g++-8"
   - os: linux
     compiler: gcc
-    addons: &gcc9
+    addons:
       apt:
         sources:
-        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:ubuntu-toolchain-r/test'
         packages:
         - g++-9
     env: MATRIX_EVAL="CXX=g++-9"
@@ -40,8 +38,6 @@ matrix:
     compiler: clang
     addons: &libstdcxx8
       apt:
-        sources:
-        - ubuntu-toolchain-r-test
         packages:
         - libstdc++-8-dev
     env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
