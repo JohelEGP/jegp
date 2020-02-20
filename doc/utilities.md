@@ -18,8 +18,8 @@ These utilities are summarized in [tab:utilities.summary].
 This header contains some basic constructs.
 
 ```C++
-namespace jegp {
-
+namespace jegp
+{
 template <class T>
 inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
 
