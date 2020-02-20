@@ -58,13 +58,14 @@ template <class DerivedRef, class Base>
 constexpr DerivedRef static_downcast(Base&& b) noexcept;
 ```
 _Requires:_ `b` is a base class subobject
-of an object of type `std::decay_t<DerivedRef>`.
+of an object of type `std::remove_cvref_t<DerivedRef>`.
 
 _Constraints:_
 - `std::is_reference_v<DerivedRef>` is `true`.
-- `std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>>` is `false`.
+- `std::is_same_v<std::remove_cvref_t<DerivedRef>,
+  std::remove_cvref_t<Base>>` is `false`.
 - `std::derived_from<std::remove_reference_t<DerivedRef>,
-std::remove_reference_t<Base>>()` is `true`.
+  std::remove_reference_t<Base>>()` is `true`.
 - `static_cast<DerivedRef>(std::forward<Base>(b))` is well-formed.
 
 _Returns:_ `static_cast<DerivedRef>(std::forward<Base>(b))`.
