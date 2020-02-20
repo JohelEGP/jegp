@@ -17,7 +17,7 @@ https://github.com/johelegp/jegp/releases).
 https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility
 "SD-8: Standard Library Compatibility"
 
-No guarantee of ABI stability are made.
+No guarantee of ABI stability is made.
 
 ## [CMake][] buildsystem
 
