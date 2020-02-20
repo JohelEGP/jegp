@@ -63,7 +63,7 @@ of an object of type `std::decay_t<DerivedRef>`.
 _Constraints:_
 - `std::is_reference_v<DerivedRef>` is `true`.
 - `std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>>` is `false`.
-- `ranges::derived_from<std::remove_reference_t<DerivedRef>,
+- `std::derived_from<std::remove_reference_t<DerivedRef>,
 std::remove_reference_t<Base>>()` is `true`.
 - `static_cast<DerivedRef>(std::forward<Base>(b))` is well-formed.
 

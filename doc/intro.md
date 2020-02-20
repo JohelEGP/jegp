@@ -21,10 +21,6 @@ assumingly amended to the context of this library.
 - Per C++ Standard's [contents]#3, a name `x` means `::jegp::x`.
 -- _end example_ ]
 
-[Range v3] is used to emulate concepts.
-
-[Range v3]: https://github.com/ericniebler/range-v3
-
    Library categories      [tab:intro.general]
 
    | Clause      | Category                  |
