@@ -42,7 +42,7 @@ from the root of your project's clone.
 
 ```
 cmake -E make_directory build
-cmake -E chdir build cmake .. -DJEGP_TEST
+cmake -E chdir build cmake .. -DJEGP_TEST=ON
 cmake --build build
 cmake -E chdir build ctest
 cmake --build build --target install

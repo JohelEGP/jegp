@@ -74,7 +74,7 @@ before_script:
 
 script:
 - cmake -E make_directory build
-- cmake -E chdir build cmake .. -DJEGP_TEST -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
+- cmake -E chdir build cmake .. -DJEGP_TEST=ON -DCMAKE_EXE_LINKER_FLAGS="$CMAKE_EXE_LINKER_FLAGS"
 - cmake --build build -j 2
 
 notifications:
