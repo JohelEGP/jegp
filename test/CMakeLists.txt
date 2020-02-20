@@ -5,5 +5,4 @@ jegp_add_test(utility
     COMPILE_ONLY
     COMPILE_OPTIONS
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
-            -Wno-missing-braces -Wno-inaccessible-base>
-    LINK_LIBRARIES range-v3)
+            -Wno-missing-braces -Wno-inaccessible-base>)
