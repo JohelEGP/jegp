@@ -20,6 +20,9 @@ This header contains some basic constructs.
 ```C++
 namespace jegp {
 
+template <class T>
+inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
+
 // [utility.underlying], `underlying`
 template <class Enum>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
