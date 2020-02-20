@@ -44,10 +44,9 @@ constexpr std::size_t hash_combine(const Args&... args) noexcept(/*see below*/);
 template <class Enum>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
 ```
-_Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
+_Constraints:_ `std::is_enum_v<Enum>` is `true`.
 
-_Remarks:_ This function shall not participate in overload resolution
-unless `std::is_enum_v<Enum>` is `true`.
+_Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
 
 ### `static_downcast`                                          [static.downcast]
 
@@ -60,14 +59,14 @@ the behaviour is undefined. -- _end note_ ]
 template <class DerivedRef, class Base>
 constexpr DerivedRef static_downcast(Base&& b) noexcept;
 ```
-_Returns:_ `static_cast<DerivedRef>(std::forward<Base>(b))`.
+_Constraints:_
+- `std::is_reference_v<DerivedRef>` is `true`.
+- `std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>>` is `false`.
+- `ranges::derived_from<std::remove_reference_t<DerivedRef>,
+std::remove_reference_t<Base>>()` is `true`.
+- `static_cast<DerivedRef>(std::forward<Base>(b))` is well-formed.
 
-_Remarks:_ This function shall not participate in overload resolution
-unless `std::is_reference_v<DerivedRef>` is `true`
-and `std::is_same_v<std::decay_t<DerivedRef>, std::decay_t<Base>>` is `false`
-and `ranges::derived_from<std::remove_reference_t<DerivedRef>,
-std::remove_reference_t<Base>>()` is `true`
-and the expression in the _Returns:_ element is well-formed.
+_Returns:_ `static_cast<DerivedRef>(std::forward<Base>(b))`.
 
 ### `hash_combine`                                                [hash.combine]
 
@@ -82,6 +81,10 @@ https://www.boost.org/doc/libs/release/doc/html/hash.html
 template <class... Args>
 constexpr std::size_t hash_combine(const Args&... args) noexcept(/*see below*/);
 ```
+_Constraints:_
+- `sizeof...(Args) >= 2` is `true`.
+- `std::hash<Args>` is enabled for all `Args`.
+
 _Effects:_ Equivalent to:
 ```C++
 std::size_t seed{};
@@ -89,9 +92,6 @@ return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 ```
 _Remarks:_ The expression inside `noexcept` is equivalent to
 the logical AND of `noexcept(std::hash<Args>{}(args))` for all `Args`.
-This function shall not participate in overload resolution
-unless `sizeof...(Args) >= 2`
-and `std::hash<Args>` is enabled for all `Args`.
 
 [ _Example:_
 ```C++
