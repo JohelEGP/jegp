@@ -62,7 +62,7 @@ _Returns:_ `static_cast<Derived>(std::forward<Base>(b))`.
 _Remarks:_ This function shall not participate in overload resolution
 unless `std::is_reference_v<Derived>` is `true`
 and `std::is_same_v<std::decay_t<Derived>, std::decay_t<Base>>` is `false`
-and `ranges::DerivedFrom<std::remove_reference_t<Derived>,
+and `ranges::derived_from<std::remove_reference_t<Derived>,
 std::remove_reference_t<Base>>()` is `true`
 and the expression in the _Returns:_ element is well-formed.
 
