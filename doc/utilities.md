@@ -57,7 +57,7 @@ that ensures it does a downcast.
 template <class DerivedRef, class Base>
 constexpr DerivedRef static_downcast(Base&& b) noexcept;
 ```
-_Requires:_ `b` is a base class subobject
+_Preconditions:_ `b` is a base class subobject
 of an object of type `std::remove_cvref_t<DerivedRef>`.
 
 _Constraints:_
