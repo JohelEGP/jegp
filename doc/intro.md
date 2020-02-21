@@ -1,6 +1,6 @@
 # Scope                                                                  [scope]
 
-This document specifies the public API of the _JEGP library_.
+This document describes the contents of the _JEGP library_.
 
 # References                                                              [refs]
 
