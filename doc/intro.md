@@ -1,8 +1,8 @@
-# Introduction                                                           [intro]
+# Scope                                                                  [scope]
 
 This document specifies the public API of the _JEGP library_.
 
-## References                                                       [intro.refs]
+# References                                                              [refs]
 
 The following documents are referred to in the text
 in such a way that some or all of their content
@@ -11,6 +11,8 @@ constitutes requirements of this document.
 - ISO/IEC 14882:2020, _Programming Languages -- C++_
 
 ISO/IEC 14882 is herein called the _C++ Standard_.
+
+# Introduction                                                           [intro]
 
 ## General                                                       [intro.general]
 
