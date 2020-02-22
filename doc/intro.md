@@ -33,9 +33,8 @@ assumingly amended to the context of this library.
 
 ### Library contents                                                  [contents]
 
-Whenever a name is qualified with `X::`,
-`::X::` is meant,
-where `X` is any identifier.
+Whenever a name is qualified with `X::`, `::X::` is meant.
+[ _Example_: When `std::Y` is mentioned, `::std::Y` is meant. -- _end example_ ]
 
 ### Reserved names                                              [reserved.names]
 
