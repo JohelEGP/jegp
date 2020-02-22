@@ -84,7 +84,7 @@ constexpr std::size_t hash_combine(const Args&... args) noexcept(/*see below*/);
 ```
 _Constraints:_
 - `sizeof...(Args) >= 2` is `true`.
-- `std::hash<Args>` is enabled for all `Args`.
+- `std::hash<Args>` is enabled (C++ Standard's [unord.hash]) for all `Args`.
 
 _Effects:_ Equivalent to:
 ```C++
