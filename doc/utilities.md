@@ -50,8 +50,7 @@ _Returns:_ `static_cast<std::underlying_type_t<Enum>>(e)`.
 
 ### `static_downcast`                                          [static.downcast]
 
-A statically constrained `static_cast`
-that ensures it does a downcast.
+A `static_cast` that performs a downcast.
 
 ```C++
 template <class DerivedRef, class Base>
