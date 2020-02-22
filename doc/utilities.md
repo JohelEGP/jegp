@@ -61,7 +61,7 @@ _Constraints:_
 - `std::is_same_v<std::remove_cvref_t<DerivedRef>,
   std::remove_cvref_t<Base>>` is `false`.
 - `std::derived_from<std::remove_reference_t<DerivedRef>,
-  std::remove_reference_t<Base>>()` is `true`.
+  std::remove_reference_t<Base>>` is `true`.
 - `static_cast<DerivedRef>(std::forward<Base>(b))` is well-formed.
 
 _Preconditions:_ `b` is a base class subobject
