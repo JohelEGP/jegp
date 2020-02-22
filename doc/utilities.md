@@ -92,4 +92,4 @@ std::size_t seed{0};
 return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 ```
 _Remarks:_ The expression inside `noexcept` is equivalent to
-the logical AND of `noexcept(std::hash<Args>{}(args))` for all `Args`.
+`noexcept((..., std::hash<Args>{}(args)))`.
