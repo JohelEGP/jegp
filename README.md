@@ -1,4 +1,4 @@
-# JEGP
+# JEGP library
 
 Generic library components for JohelEGP's C++ projects.
 
@@ -11,7 +11,7 @@ https://github.com/johelegp/jegp/releases).
 
 ### Compatibility
 
-[SD-8][] states the rights the API reserves for itself.
+[SD-8][] states the rights the JEGP library reserves for itself.
 
 [SD-8]:
 https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility
