@@ -4,7 +4,7 @@ Generic library components for JohelEGP's C++ projects.
 
 ## Documentation
 
-The public API is in [doc/](doc/).
+The public API is at https://johelegp.github.io/jegp/.
 It abides to [Semantic Versioning 2.0.0](https://semver.org/),
 with the versions being [git tags](
 https://github.com/johelegp/jegp/releases).
