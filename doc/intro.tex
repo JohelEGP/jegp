@@ -1,0 +1,56 @@
+%!TEX root = std.tex
+\rSec0[scope]{Scope}
+
+\pnum
+This document describes the contents of the \defn{JEGP library}.
+
+\rSec0[refs]{References}
+
+\pnum
+The following documents are referred to in the text
+in such a way that some or all of their content
+constitutes requirements of this document.
+
+\begin{itemize}
+\item ISO/IEC 14882:2020, \doccite{Programming Languages --- C++}
+\end{itemize}
+
+\pnum
+ISO/IEC 14882 is herein called the \defn{C++ Standard}.
+
+\rSec0[intro]{Introduction}
+
+\rSec1[intro.general]{General}
+
+\pnum
+The library specification subsumes the C++ Standard's [library],
+assumingly amended to the context of this library.
+\begin{example}
+\begin{itemize}
+\item Per C++ Standard's [namespace.future], \tcode{::jegp2} is reserved.
+\item Per C++ Standard's [contents]\#3, a name \tcode{x} means \tcode{::jegp::x}.
+\end{itemize}
+\end{example}
+The following subclauses describe additions to it.
+
+\begin{floattable}{Library categories}{library.categories}
+{ll}
+\topline
+\hdstyle{Clause}        & \hdstyle{Category}          \\ \capsep
+\ref{utilities}         & General utilities library   \\
+\end{floattable}
+
+\rSec1[requirements]{Library-wide requirements}
+
+\rSec2[contents]{Library contents}
+
+\pnum
+Whenever a name is qualified with \tcode{X::}, \tcode{::X::} is meant.
+\begin{example}
+When \tcode{std::Y} is mentioned, \tcode{::std::Y} is meant.
+\end{example}
+
+\rSec2[reserved.names]{Reserved names}
+
+\pnum
+The JEGP library reserves macro names starting with \tcode{JEGP_}.

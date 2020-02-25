@@ -1,0 +1,136 @@
+%!TEX root = std.tex
+\rSec0[utilities]{General utilities library}
+
+\rSec1[utilities.general]{General}
+
+\pnum
+This clause describes generally useful utilities.
+These utilities are summarized in \tref{utilities.summary}.
+
+\begin{libsumtab}{General utilities library summary}{utilities.summary}
+\ref{utility}       & Utility components        & \tcode{<jegp/utility.hpp>}    \\
+\end{libsumtab}
+
+\rSec1[utility]{Utility components}
+
+\rSec2[utility.syn]{Header \tcode{<jegp/utility.hpp>} synopsis}
+
+\pnum
+The header \libheaderdef{jegp/utility.hpp}
+contains some basic constructs.
+
+\indexheader{jegp/utility.hpp}%
+\indexlibraryglobal{bitsof}%
+\begin{codeblock}
+namespace jegp
+{
+template <class T>
+inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
+
+// \ref{utility.underlying}, \tcode{underlying}
+template <class Enum>
+constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
+
+// \ref{static.downcast}, \tcode{static_downcast}
+template <class DerivedRef, class Base>
+constexpr DerivedRef static_downcast(Base&& b) noexcept;
+
+// \ref{hash.combine}, \tcode{hash_combine}
+template <class... Args>
+constexpr std::size_t hash_combine(const Args&... args) noexcept(@\seebelow@);
+
+} // namespace jegp
+\end{codeblock}
+
+\rSec2[utility.underlying]{\tcode{underlying}}
+
+\indexlibraryglobal{underlying}%
+\begin{itemdecl}
+template <class Enum>
+constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+\pnum
+\constraints
+\tcode{std::is_enum_v<Enum>} is \tcode{true}.
+
+\pnum
+\returns
+\tcode{static_cast<std::underlying_type_t<Enum>>(e)}.
+\end{itemdescr}
+
+\rSec2[static.downcast]{\tcode{static_downcast}}
+
+\pnum
+A \tcode{static_cast} that performs a downcast.
+
+\indexlibraryglobal{static_downcast}%
+\begin{itemdecl}
+template <class DerivedRef, class Base>
+constexpr DerivedRef static_downcast(Base&& b) noexcept;
+\end{itemdecl}
+
+\begin{itemdescr}
+\pnum
+\constraints
+\begin{itemize}
+\item
+  \tcode{std::is_reference_v<DerivedRef>} is \tcode{true}.
+\item
+  \tcode{std::is_same_v<std::remove_cvref_t<DerivedRef>, std::remove_cvref_t<Base>>}
+  is \tcode{false}.
+\item
+  \tcode{std::derived_from<std::remove_reference_t<DerivedRef>, std::remove_reference_t<Ba\-se>>}
+  is \tcode{true}.
+\item
+  \tcode{static_cast<DerivedRef>(std::forward<Base>(b))} is well-formed.
+\end{itemize}
+
+\pnum
+\expects
+\tcode{b} is a base class subobject
+of an object of type \tcode{std::remove_cvref_t<DerivedRef>}.
+
+\pnum
+\returns
+\tcode{static_cast<DerivedRef>(std::forward<Base>(b))}.
+\end{itemdescr}
+
+\rSec2[hash.combine]{\tcode{hash_combine}}
+
+\pnum
+Insipred by \tcode{Boost.ContainerHash}.
+Useful in the specializations of \tcode{std::hash}
+whose \tcode{Key}'s salient parts consist of two or more objects.
+
+\indexlibraryglobal{hash_combine}%
+\begin{itemdecl}
+template <class... Args>
+constexpr std::size_t hash_combine(const Args&... args) noexcept(@\seebelow@);
+\end{itemdecl}
+
+\begin{itemdescr}
+\pnum
+\constraints
+\begin{itemize}
+\item
+  $\tcode{sizeof...(Args)} \geq 2$ and
+\item
+  \tcode{std::hash<T>} is enabled (C++ Standard's [unord.hash])
+  for all \tcode{T} in \tcode{Args}.
+\end{itemize}
+
+\pnum
+\effects
+Equivalent to:
+\begin{codeblock}
+std::size_t seed{0};
+return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
+\end{codeblock}
+
+\pnum
+\remarks
+The expression inside \tcode{noexcept} is equivalent to
+\tcode{noexcept((..., std::hash<Args>{}(args)))}.
+\end{itemdescr}
