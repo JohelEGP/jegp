@@ -1,1 +1,1 @@
-option(JEGP_TEST "Whether to test the JEGP library.")
+option(JEGP_TEST "Test the library.")

@@ -28,9 +28,9 @@ The library's target is `jegp::jegp`.
 
 ### Options
 
-| Option      | Description                       | Default value |
-| ----------- | --------------------------------- | ------------- |
-| `JEGP_TEST` | Whether to test the JEGP library. | `OFF`         |
+| Option         | Description       | Default value |
+| -------------- | ----------------- | ------------- |
+| `JEGP_TEST`    | Test the library. | `OFF`         |
 
 ### Build, test, install
 
