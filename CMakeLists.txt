@@ -41,6 +41,6 @@ if(BUILD_TESTING AND JEGP_TEST)
     add_subdirectory(test)
 endif()
 
-if(JEGP_DOC_PDF)
+if(JEGP_DOC_PDF OR JEGP_DOC_HTML)
     add_subdirectory(doc)
 endif()

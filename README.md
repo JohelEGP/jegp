@@ -17,10 +17,11 @@ The library's target is `jegp::jegp`.
 
 ### Options
 
-| Option         | Description                      | Default value |
-| -------------- | -------------------------------- | ------------- |
-| `JEGP_TEST`    | Test the library.                | `OFF`         |
-| `JEGP_DOC_PDF` | Make a PDF of the documentation. | `OFF`         |
+| Option          | Description                         | Default value |
+| --------------- | ----------------------------------- | ------------- |
+| `JEGP_TEST`     | Test the library.                   | `OFF`         |
+| `JEGP_DOC_PDF`  | Make a PDF of the documentation.    | `OFF`         |
+| `JEGP_DOC_HTML` | Generate HTML of the documentation. | `OFF`         |
 
 ### Build, test, install
 

@@ -20,3 +20,11 @@ No guarantee of ABI stability is made.
 1. Follow the "Getting Started" at https://github.com/cplusplus/draft.
 
 2. Set `JEGP_DOC_PDF` `ON` when building this library.
+
+## Generate HTML
+
+1. Meet the prerequisites at https://github.com/Eelis/cxxdraft-htmlgen.
+Optionally see the "sectionfilestyle".
+
+2. Set `JEGP_DOC_HTML` to `ON` or a "sectionfilestyle"
+when building this library.
