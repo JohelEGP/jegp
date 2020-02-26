@@ -5,19 +5,8 @@ Generic library components for JohelEGP's C++ projects.
 ## Documentation
 
 The public API is at https://johelegp.github.io/jegp/.
-It abides to [Semantic Versioning 2.0.0](https://semver.org/),
-with the versions being [git tags](
-https://github.com/johelegp/jegp/releases).
 
-### Compatibility
-
-[SD-8][] states the rights the JEGP library reserves for itself.
-
-[SD-8]:
-https://isocpp.org/std/standing-documents/sd-8-standard-library-compatibility
-"SD-8: Standard Library Compatibility"
-
-No guarantee of ABI stability is made.
+See [doc/](doc/) for more details.
 
 ## [CMake][] buildsystem
 
@@ -28,9 +17,10 @@ The library's target is `jegp::jegp`.
 
 ### Options
 
-| Option         | Description       | Default value |
-| -------------- | ----------------- | ------------- |
-| `JEGP_TEST`    | Test the library. | `OFF`         |
+| Option         | Description                      | Default value |
+| -------------- | -------------------------------- | ------------- |
+| `JEGP_TEST`    | Test the library.                | `OFF`         |
+| `JEGP_DOC_PDF` | Make a PDF of the documentation. | `OFF`         |
 
 ### Build, test, install
 

@@ -40,3 +40,7 @@ include(CTest)
 if(BUILD_TESTING AND JEGP_TEST)
     add_subdirectory(test)
 endif()
+
+if(JEGP_DOC_PDF)
+    add_subdirectory(doc)
+endif()
