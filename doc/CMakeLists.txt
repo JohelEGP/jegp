@@ -10,12 +10,16 @@ ExternalProject_Add(draft-jegp
 
 ExternalProject_Add_Step(draft-jegp copy-sources
     DEPENDEES download
+    DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/intro.tex
+        ${CMAKE_CURRENT_SOURCE_DIR}/utilities.tex
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_CURRENT_SOURCE_DIR} <SOURCE_DIR>/source/)
 
 if(JEGP_DOC_PDF)
     ExternalProject_Add_Step(draft-jegp make-pdf
         DEPENDEES copy-sources
+        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/jegp.pdf
         COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/source/ make
         COMMAND ${CMAKE_COMMAND} -E copy
             <SOURCE_DIR>/source/std.pdf ${CMAKE_CURRENT_SOURCE_DIR}/jegp.pdf)
