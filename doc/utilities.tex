@@ -73,16 +73,18 @@ constexpr DerivedRef static_downcast(Base&& b) noexcept;
 
 \begin{itemdescr}
 \pnum
+Let \tcode{D} be \tcode{std::remove_cvref_t<DerivedRef>}
+and \tcode{B} be \tcode{std::remove_cvref_t<Base>}.
+
+\pnum
 \constraints
 \begin{itemize}
 \item
   \tcode{std::is_reference_v<DerivedRef>} is \tcode{true}.
 \item
-  \tcode{std::is_same_v<std::remove_cvref_t<DerivedRef>, std::remove_cvref_t<Base>>}
-  is \tcode{false}.
+  \tcode{std::is_same_v<D, B>} is \tcode{false}.
 \item
-  \tcode{std::derived_from<std::remove_reference_t<DerivedRef>, std::remove_reference_t<Ba\-se>>}
-  is \tcode{true}.
+  \tcode{std::derived_from<D, B>} is \tcode{true}.
 \item
   \tcode{static_cast<DerivedRef>(std::forward<Base>(b))} is well-formed.
 \end{itemize}
@@ -132,5 +134,7 @@ return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 \pnum
 \remarks
 The expression inside \tcode{noexcept} is equivalent to
-\tcode{noexcept((..., std::hash<Args>{}(args)))}.
+\begin{codeblock}
+noexcept((..., std::hash<Args>{}(args)))
+\end{codeblock}
 \end{itemdescr}
