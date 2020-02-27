@@ -80,11 +80,11 @@ and \tcode{B} be \tcode{std::remove_cvref_t<Base>}.
 \constraints
 \begin{itemize}
 \item
-  \tcode{std::is_reference_v<DerivedRef>} is \tcode{true}.
+  \tcode{std::is_reference_v<DerivedRef>} is \tcode{true},
 \item
-  \tcode{std::is_same_v<D, B>} is \tcode{false}.
+  \tcode{std::is_same_v<D, B>} is \tcode{false},
 \item
-  \tcode{std::derived_from<D, B>} is \tcode{true}.
+  \tcode{std::derived_from<D, B>} is \tcode{true}, and
 \item
   \tcode{static_cast<DerivedRef>(std::forward<Base>(b))} is well-formed.
 \end{itemize}
