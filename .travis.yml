@@ -77,7 +77,6 @@ before_script:
 - |
   if [ -n "$USE_LIBCXX" ]; then
     CXXFLAGS="$CXXFLAGS -stdlib=libc++"
-    CMAKE_EXE_LINKER_FLAGS=-lc++abi
     export LDFLAGS=-lc++abi
   fi
 
