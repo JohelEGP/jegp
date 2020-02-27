@@ -135,6 +135,6 @@ return (..., (seed ^= std::hash<Args>{}(args) + (seed << 6) + (seed >> 2)));
 \remarks
 The expression inside \tcode{noexcept} is equivalent to
 \begin{codeblock}
-noexcept((..., std::hash<Args>{}(args)))
+(noexcept(std::hash<Args>{}(args)) && ...)
 \end{codeblock}
 \end{itemdescr}
