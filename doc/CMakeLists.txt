@@ -9,7 +9,7 @@ ExternalProject_Add(draft-jegp
     INSTALL_COMMAND "")
 
 ExternalProject_Add_Step(draft-jegp copy-sources
-    DEPENDEES download
+    DEPENDEES update
     DEPENDS
         ${CMAKE_CURRENT_SOURCE_DIR}/intro.tex
         ${CMAKE_CURRENT_SOURCE_DIR}/utilities.tex
