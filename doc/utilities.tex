@@ -20,13 +20,9 @@ The header \libheaderdef{jegp/utility.hpp}
 contains some basic constructs.
 
 \indexheader{jegp/utility.hpp}%
-\indexlibraryglobal{bitsof}%
 \begin{codeblock}
 namespace jegp
 {
-template <class T>
-inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
-
 // \ref{utility.underlying}, \tcode{underlying}
 template <class Enum>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;

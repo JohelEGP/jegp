@@ -1,7 +1,6 @@
 #ifndef JEGP_UTILITY_HPP
 #define JEGP_UTILITY_HPP
 
-#include <climits>
 #include <cstddef>
 #include <functional>
 #include <type_traits>
@@ -10,9 +9,6 @@
 
 namespace jegp
 {
-template <class T>
-inline constexpr std::size_t bitsof{sizeof(T) * CHAR_BIT};
-
 template <class Enum, std::enable_if_t<std::is_enum_v<Enum>>* = nullptr>
 constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept
 {
