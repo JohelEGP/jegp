@@ -29,7 +29,7 @@ constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
 
 // \ref{static.downcast}, \tcode{static_downcast}
 template <class DerivedRef, class Base>
-constexpr DerivedRef static_downcast(Base&& b) noexcept;
+constexpr DerivedRef static_downcast(Base&& base) noexcept;
 
 // \ref{hash.combine}, \tcode{hash_combine}
 template <class... Args>
@@ -64,35 +64,33 @@ A \tcode{static_cast} that performs a downcast.
 \indexlibraryglobal{static_downcast}%
 \begin{itemdecl}
 template <class DerivedRef, class Base>
-constexpr DerivedRef static_downcast(Base&& b) noexcept;
+constexpr DerivedRef static_downcast(Base&& base) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}
 \pnum
-Let \tcode{D} be \tcode{std::remove_cvref_t<DerivedRef>}
-and \tcode{B} be \tcode{std::remove_cvref_t<Base>}.
+Let \tcode{\placeholder{derived-ref}} be
+\tcode{static_cast<DerivedRef>(std::forward<Base>(base))}.
 
 \pnum
 \constraints
 \begin{itemize}
 \item
-  \tcode{std::is_reference_v<DerivedRef>} is \tcode{true},
+  \tcode{DerivedRef} is a reference type,
 \item
-  \tcode{std::is_same_v<D, B>} is \tcode{false},
+  \tcode{std::remove_cvref_t<DerivedRef>} is derived from
+  \tcode{std::remove_cvref_t<Base>}, and
 \item
-  \tcode{std::derived_from<D, B>} is \tcode{true}, and
-\item
-  \tcode{static_cast<DerivedRef>(std::forward<Base>(b))} is well-formed.
+  \tcode{\placeholder{derived-ref}} is well-formed.
 \end{itemize}
 
 \pnum
 \expects
-\tcode{b} is a base class subobject
-of an object of type \tcode{std::remove_cvref_t<DerivedRef>}.
+\tcode{\placeholder{derived-ref}} has well-defined behavior.
 
 \pnum
 \returns
-\tcode{static_cast<DerivedRef>(std::forward<Base>(b))}.
+\tcode{\placeholder{derived-ref}}.
 \end{itemdescr}
 
 \rSec2[hash.combine]{\tcode{hash_combine}}
