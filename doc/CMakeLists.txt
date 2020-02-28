@@ -20,7 +20,7 @@ if(JEGP_DOC_PDF)
     ExternalProject_Add_Step(draft-jegp make-pdf
         DEPENDEES copy-sources
         BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/jegp.pdf
-        COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/source/ make
+        COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/source/ make quiet
         COMMAND ${CMAKE_COMMAND} -E copy
             <SOURCE_DIR>/source/std.pdf ${CMAKE_CURRENT_SOURCE_DIR}/jegp.pdf)
 endif()

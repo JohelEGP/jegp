@@ -5,85 +5,103 @@ env:
   global:
   - PATH=/tmp/bin:$PATH
   - CXXFLAGS="-Wpedantic -Wall -Wextra"
+  - JEGP_OPTIONS=-DJEGP_TEST=ON
 
 matrix:
   include:
-  - os: osx
-    compiler: clang
-    addons:
-      homebrew:
-        packages:
-        - cmake
-        update: true
   - os: linux
-    compiler: gcc
     addons:
       apt:
         packages:
-        - g++-8
-    env: MATRIX_EVAL="CXX=g++-8"
-  - os: linux
-    compiler: gcc
-    addons:
-      apt:
-        sources:
-        - sourceline: 'ppa:ubuntu-toolchain-r/test'
-        packages:
-        - g++-9
-    env: MATRIX_EVAL="CXX=g++-9"
-  - os: linux
+        - latexmk
+        - texlive-latex-recommended
+        - texlive-latex-extra
+        - texlive-fonts-recommended
+        - texlive-generic-recommended
+        - lmodern
     compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: &libstdcxx8
-      apt:
-        packages:
-        - libstdc++-8-dev
-    env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
-  - os: linux
-    compiler: clang
-    env: MATRIX_EVAL="USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: *libstdcxx8
-  - os: linux
-    compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=8.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: *libstdcxx8
-    env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
-  - os: linux
-    compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=9.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: &libstdcxx9
-      apt:
-        sources:
-        - sourceline: 'ppa:ubuntu-toolchain-r/test'
-        packages:
-        - libstdc++-9-dev
-    env: MATRIX_EVAL="CLANG_VERSION=9.0.0"
+    env: MATRIX_EVAL="JEGP_DOC_PDF=1 && USE_LIBCXX=1"
+#  - os: osx
+#    compiler: clang
+#    addons:
+#      homebrew:
+#        packages:
+#        - cmake
+#        update: true
+#  - os: linux
+#    compiler: gcc
+#    addons:
+#      apt:
+#        packages:
+#        - g++-8
+#    env: MATRIX_EVAL="CXX=g++-8"
+#  - os: linux
+#    compiler: gcc
+#    addons:
+#      apt:
+#        sources:
+#        - sourceline: 'ppa:ubuntu-toolchain-r/test'
+#        packages:
+#        - g++-9
+#    env: MATRIX_EVAL="CXX=g++-9"
+#  - os: linux
+#    compiler: clang
+#    env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
+#  - os: linux
+#    compiler: clang
+#    addons: &libstdcxx8
+#      apt:
+#        packages:
+#        - libstdc++-8-dev
+#    env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
+#  - os: linux
+#    compiler: clang
+#    env: MATRIX_EVAL="USE_LIBCXX=1"
+#  - os: linux
+#    compiler: clang
+#    addons: *libstdcxx8
+#  - os: linux
+#    compiler: clang
+#    env: MATRIX_EVAL="CLANG_VERSION=8.0.0 && USE_LIBCXX=1"
+#  - os: linux
+#    compiler: clang
+#    addons: *libstdcxx8
+#    env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
+#  - os: linux
+#    compiler: clang
+#    env: MATRIX_EVAL="CLANG_VERSION=9.0.0 && USE_LIBCXX=1"
+#  - os: linux
+#    compiler: clang
+#    addons: &libstdcxx9
+#      apt:
+#        sources:
+#        - sourceline: 'ppa:ubuntu-toolchain-r/test'
+#        packages:
+#        - libstdc++-9-dev
+#    env: MATRIX_EVAL="CLANG_VERSION=9.0.0"
 
 before_script:
 - eval "${MATRIX_EVAL}"
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh 3.15.7; fi
-- |
-  if [ -n "$CLANG_VERSION" ]; then
-    travis/install_clang.sh ${CLANG_VERSION}
-  fi
+- if [ -n "$CLANG_VERSION" ]; then travis/install_clang.sh ${CLANG_VERSION} fi
 - |
   if [ -n "$USE_LIBCXX" ]; then
     CXXFLAGS="$CXXFLAGS -stdlib=libc++"
-    export LDFLAGS=-lc++abi
+    LDFLAGS=-lc++abi
   fi
+- if [ -n "$JEGP_DOC_PDF" ]; then JEGP_OPTIONS=-DJEGP_DOC_PDF=ON; fi
 
 script:
 - cmake -E make_directory build
-- cmake -E chdir build cmake .. -DJEGP_TEST=ON
+- cmake -E chdir build cmake .. $JEGP_OPTIONS
 - cmake --build build -j 2
+
+before_deploy: cp --parents doc/jegp.pdf doc/jegp/
+
+deploy:
+  provider: pages:git
+  edge: true
+  local_dir: doc/jegp/
 
 notifications:
   email: false
