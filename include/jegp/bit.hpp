@@ -7,7 +7,7 @@
 namespace jegp {
 
 template <class T>
-constexpr auto bitsof{sizeof(T) * CHAR_BIT};
+[[deprecated]] constexpr auto bitsof{sizeof(T) * CHAR_BIT};
 
 template <
     class UnsignedInteger, class = std::enable_if_t<
