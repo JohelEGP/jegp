@@ -3,11 +3,12 @@ dist: bionic
 
 env:
   global:
-  - PATH=/tmp/bin:$PATH
+  - PATH=/tmp/bin:/tmp/node_modules/.bin:$PATH
   - CXXFLAGS="-Wpedantic -Wall -Wextra"
   - JEGP_OPTIONS=-DJEGP_TEST=ON
+  - NODE_PATH=/tmp/node_modules:/tmp/node_modules/mathjax-node-cli/node_modules
 
-matrix:
+jobs:
   include:
   - os: linux
     addons:
@@ -20,88 +21,98 @@ matrix:
         - texlive-generic-recommended
         - lmodern
     compiler: clang
-    env: MATRIX_EVAL="JEGP_DOC_PDF=1 && USE_LIBCXX=1"
-#  - os: osx
-#    compiler: clang
-#    addons:
-#      homebrew:
-#        packages:
-#        - cmake
-#        update: true
-#  - os: linux
-#    compiler: gcc
-#    addons:
-#      apt:
-#        packages:
-#        - g++-8
-#    env: MATRIX_EVAL="CXX=g++-8"
-#  - os: linux
-#    compiler: gcc
-#    addons:
-#      apt:
-#        sources:
-#        - sourceline: 'ppa:ubuntu-toolchain-r/test'
-#        packages:
-#        - g++-9
-#    env: MATRIX_EVAL="CXX=g++-9"
-#  - os: linux
-#    compiler: clang
-#    env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
-#  - os: linux
-#    compiler: clang
-#    addons: &libstdcxx8
-#      apt:
-#        packages:
-#        - libstdc++-8-dev
-#    env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
-#  - os: linux
-#    compiler: clang
-#    env: MATRIX_EVAL="USE_LIBCXX=1"
-#  - os: linux
-#    compiler: clang
-#    addons: *libstdcxx8
-#  - os: linux
-#    compiler: clang
-#    env: MATRIX_EVAL="CLANG_VERSION=8.0.0 && USE_LIBCXX=1"
-#  - os: linux
-#    compiler: clang
-#    addons: *libstdcxx8
-#    env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
-#  - os: linux
-#    compiler: clang
-#    env: MATRIX_EVAL="CLANG_VERSION=9.0.0 && USE_LIBCXX=1"
-#  - os: linux
-#    compiler: clang
-#    addons: &libstdcxx9
-#      apt:
-#        sources:
-#        - sourceline: 'ppa:ubuntu-toolchain-r/test'
-#        packages:
-#        - libstdc++-9-dev
-#    env: MATRIX_EVAL="CLANG_VERSION=9.0.0"
+    env: MATRIX_EVAL="JEGP_DOC=1 && USE_LIBCXX=1"
+  - os: osx
+    compiler: clang
+    addons:
+      homebrew:
+        packages:
+        - cmake
+        update: true
+  - os: linux
+    compiler: gcc
+    addons:
+      apt:
+        packages:
+        - g++-8
+    env: MATRIX_EVAL="CXX=g++-8"
+  - os: linux
+    compiler: gcc
+    addons:
+      apt:
+        sources:
+        - sourceline: 'ppa:ubuntu-toolchain-r/test'
+        packages:
+        - g++-9
+    env: MATRIX_EVAL="CXX=g++-9"
+  - os: linux
+    compiler: clang
+    env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
+  - os: linux
+    compiler: clang
+    addons: &libstdcxx8
+      apt:
+        packages:
+        - libstdc++-8-dev
+    env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
+  - os: linux
+    compiler: clang
+    env: MATRIX_EVAL="USE_LIBCXX=1"
+  - os: linux
+    compiler: clang
+    addons: *libstdcxx8
+  - os: linux
+    compiler: clang
+    env: MATRIX_EVAL="CLANG_VERSION=8.0.0 && USE_LIBCXX=1"
+  - os: linux
+    compiler: clang
+    addons: *libstdcxx8
+    env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
+  - os: linux
+    compiler: clang
+    env: MATRIX_EVAL="CLANG_VERSION=9.0.0 && USE_LIBCXX=1"
+  - os: linux
+    compiler: clang
+    addons: &libstdcxx9
+      apt:
+        sources:
+        - sourceline: 'ppa:ubuntu-toolchain-r/test'
+        packages:
+        - libstdc++-9-dev
+    env: MATRIX_EVAL="CLANG_VERSION=9.0.0"
 
 before_script:
 - eval "${MATRIX_EVAL}"
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh 3.15.7; fi
-- if [ -n "$CLANG_VERSION" ]; then travis/install_clang.sh ${CLANG_VERSION} fi
+- if [ -n "$CLANG_VERSION" ]; then travis/install_clang.sh ${CLANG_VERSION}; fi
 - |
   if [ -n "$USE_LIBCXX" ]; then
     CXXFLAGS="$CXXFLAGS -stdlib=libc++"
     LDFLAGS=-lc++abi
   fi
-- if [ -n "$JEGP_DOC_PDF" ]; then JEGP_OPTIONS=-DJEGP_DOC_PDF=ON; fi
+- |
+  if [ -n "$JEGP_DOC" ]; then
+    JEGP_OPTIONS="$JEGP_OPTIONS -DJEGP_DOC_PDF=ON -DJEGP_DOC_HTML=Bare"
+    travis/meet_doc_prereq.sh
+  fi
 
 script:
 - cmake -E make_directory build
 - cmake -E chdir build cmake .. $JEGP_OPTIONS
 - cmake --build build -j 2
 
-before_deploy: cp --parents doc/jegp.pdf doc/jegp/
+cache:
+  directories: $HOME/.stack
+
+before_deploy: travis/postprocess_doc.sh
 
 deploy:
   provider: pages:git
   edge: true
+  allow_empty_commit: false
   local_dir: doc/jegp/
+  on:
+    condition: -n $JEGP_DOC
 
 notifications:
   email: false
