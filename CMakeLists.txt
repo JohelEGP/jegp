@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15.7)
+cmake_minimum_required(VERSION 3.15.4)
 project(jegp
     VERSION 4.0.0
     DESCRIPTION "Generic library components for JohelEGP's C++ projects."

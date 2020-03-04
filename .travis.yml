@@ -24,11 +24,6 @@ jobs:
     env: MATRIX_EVAL="JEGP_DOC=1 && USE_LIBCXX=1"
   - os: osx
     compiler: clang
-    addons:
-      homebrew:
-        packages:
-        - cmake
-        update: true
   - os: linux
     compiler: gcc
     addons:
@@ -83,7 +78,7 @@ jobs:
 
 before_script:
 - eval "${MATRIX_EVAL}"
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh 3.15.7; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh 3.15.4; fi
 - if [ -n "$CLANG_VERSION" ]; then travis/install_clang.sh ${CLANG_VERSION}; fi
 - |
   if [ -n "$USE_LIBCXX" ]; then
