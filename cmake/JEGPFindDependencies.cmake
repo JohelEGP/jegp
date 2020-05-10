@@ -1,9 +1,11 @@
 include(FetchContent)
 
-FetchContent_Declare(jegp_cmake_modules
+FetchContent_Declare(
+    jegp_cmake_modules
     GIT_REPOSITORY https://github.com/johelegp/jegp.cmake_modules
     GIT_SHALLOW True)
-FetchContent_Declare(range-v3
+FetchContent_Declare(
+    range-v3
     GIT_REPOSITORY https://github.com/ericniebler/range-v3.git
     GIT_SHALLOW True)
 
