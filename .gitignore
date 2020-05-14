@@ -1,3 +1,4 @@
 build/
+cmake/CPM.cmake
 doc/jegp/
 doc/source/

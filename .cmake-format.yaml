@@ -9,6 +9,23 @@ parse:
         SOURCE: 1
         COMPILE_OPTIONS: +
         LINK_LIBRARIES: +
+    CPMFindPackage:
+      pargs:
+        nargs: '*'
+        flags: []
+      spelling: CPMFindPackage
+      kwargs:
+        NAME: 1
+        VERSION: 1
+        GIT_TAG: 1
+        GIT_SHALLOW: 1
+        DOWNLOAD_ONLY: 1
+        GITHUB_REPOSITORY: 1
+        GITLAB_REPOSITORY: 1
+        SOURCE_DIR: 1
+        DOWNLOAD_COMMAND: 1
+        FIND_PACKAGE_ARGUMENTS: 1
+        OPTIONS: +
 format:
   line_width: 80
   tab_size: 4
