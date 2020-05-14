@@ -21,7 +21,7 @@ jobs:
         - texlive-generic-recommended
         - lmodern
     compiler: clang
-    env: MATRIX_EVAL="JEGP_DOC=1 && USE_LIBCXX=1"
+    env: MATRIX_EVAL="JEGP_DOC=1"
   - os: osx
     compiler: clang
   - os: linux
@@ -42,46 +42,22 @@ jobs:
     env: MATRIX_EVAL="CXX=g++-9"
   - os: linux
     compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=6.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: &libstdcxx8
-      apt:
-        packages:
-        - libstdc++-8-dev
     env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
   - os: linux
     compiler: clang
-    env: MATRIX_EVAL="USE_LIBCXX=1"
   - os: linux
     compiler: clang
-    addons: *libstdcxx8
-  - os: linux
-    compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=8.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: *libstdcxx8
     env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
   - os: linux
     compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=9.0.0 && USE_LIBCXX=1"
-  - os: linux
-    compiler: clang
-    addons: &libstdcxx9
-      apt:
-        sources:
-        - sourceline: 'ppa:ubuntu-toolchain-r/test'
-        packages:
-        - libstdc++-9-dev
     env: MATRIX_EVAL="CLANG_VERSION=9.0.0"
 
 before_script:
 - eval "${MATRIX_EVAL}"
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis/install_cmake.sh 3.15.4; fi
-- if [ -n "$CLANG_VERSION" ]; then travis/install_clang.sh ${CLANG_VERSION}; fi
 - |
-  if [ -n "$USE_LIBCXX" ]; then
+  if [ -n "$CLANG_VERSION" ]; then
+    travis/install_clang.sh ${CLANG_VERSION};
     CXXFLAGS="$CXXFLAGS -stdlib=libc++"
     LDFLAGS=-lc++abi
   fi
