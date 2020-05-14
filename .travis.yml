@@ -39,8 +39,6 @@ jobs:
         - g++-9
     env: MATRIX_EVAL="CXX=g++-9"
   - compiler: clang
-    env: MATRIX_EVAL="CLANG_VERSION=6.0.0"
-  - compiler: clang
   - compiler: clang
     env: MATRIX_EVAL="CLANG_VERSION=8.0.0"
   - compiler: clang
