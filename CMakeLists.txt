@@ -13,7 +13,7 @@ include(JEGPFindDependencies)
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)
 target_compile_features(jegp INTERFACE cxx_std_17)
-target_link_libraries(jegp INTERFACE range-v3::concepts)
+target_link_libraries(jegp INTERFACE range-v3::range-v3)
 target_include_directories(
     jegp INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                    $<INSTALL_INTERFACE:include>)
