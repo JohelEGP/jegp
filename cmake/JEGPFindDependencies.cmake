@@ -22,7 +22,7 @@ CPMFindPackage(
 list(APPEND CMAKE_MODULE_PATH "${jegp_cmake_modules_SOURCE_DIR}")
 
 if(range-v3_ADDED)
-    add_library(range-v3::range-v3 INTERFACE IMPORTED)
+    add_library(range-v3::range-v3 INTERFACE IMPORTED GLOBAL)
     target_include_directories(range-v3::range-v3
                                INTERFACE ${range-v3_SOURCE_DIR}/include)
 endif()
