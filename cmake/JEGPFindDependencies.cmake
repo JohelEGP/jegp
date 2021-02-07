@@ -12,17 +12,5 @@ CPMFindPackage(
     GITHUB_REPOSITORY johelegp/jegp.cmake_modules
     GIT_TAG master
     GIT_SHALLOW True)
-CPMFindPackage(
-    NAME range-v3
-    GITHUB_REPOSITORY ericniebler/range-v3
-    GIT_TAG master
-    GIT_SHALLOW True
-    DOWNLOAD_ONLY True)
 
 list(APPEND CMAKE_MODULE_PATH "${jegp_cmake_modules_SOURCE_DIR}")
-
-if(range-v3_ADDED)
-    add_library(range-v3::range-v3 INTERFACE IMPORTED GLOBAL)
-    target_include_directories(range-v3::range-v3
-                               INTERFACE ${range-v3_SOURCE_DIR}/include)
-endif()

@@ -2,7 +2,6 @@
 #include <cstddef>
 #include <functional>
 #include <utility>
-#include <experimental/type_traits>
 #include <jegp/utility.hpp>
 
 // [hash.combine]
@@ -54,11 +53,7 @@ struct hash<Z> : hash<void>
 namespace
 {
 template <class... Args>
-using hash_combine_t = decltype(jegp::hash_combine(std::declval<Args>()...));
-
-template <class... Args>
-constexpr bool is_hash_combinable{
-    std::experimental::is_detected_v<hash_combine_t, Args...>};
+constexpr bool is_hash_combinable = requires { jegp::hash_combine(std::declval<Args>()...); };
 
 constexpr void test_hash_combine()
 {
@@ -102,23 +97,13 @@ constexpr void test_hash_combine()
 
 // [static.downcast]
 
-template <class Derived, class Base>
-using static_downcast_t =
-    decltype(jegp::static_downcast<Derived>(std::declval<Base>()));
-
 template <class DerivedRef, class Base>
-constexpr bool is_static_downcastable{
-    std::experimental::is_detected_v<static_downcast_t, DerivedRef, Base>};
+constexpr bool is_static_downcastable = requires { jegp::static_downcast<DerivedRef>(std::declval<Base>()); };
 
-template <class Derived, class Base>
-constexpr bool is_static_downcast_assertable{
-    std::is_same_v<Derived, std::decay_t<Derived>> &&
-    std::is_same_v<Base, std::decay_t<Base>> &&
-    !std::is_same_v<Derived, Base> && std::is_base_of_v<Base, Derived>};
-
-template <
-    class Derived, class Base, bool ExpectedToPass = true,
-    std::enable_if_t<is_static_downcast_assertable<Derived, Base>>* = nullptr>
+template <class Derived, class Base, bool ExpectedToPass = true>
+    requires std::is_same_v<Derived, std::remove_cvref_t<Derived>> &&
+        std::is_same_v<Base, std::remove_cvref_t<Base>> &&
+        (!std::is_same_v<Derived, Base> && std::is_base_of_v<Base, Derived>)
 constexpr void assert_is_static_downcastable()
 {
     auto ok = [](bool b) { return b == ExpectedToPass; };
