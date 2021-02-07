@@ -1,11 +1,11 @@
-if(NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/CPM.cmake)
-    message(STATUS "Downloading CPM.cmake")
-    file(DOWNLOAD
-         https://github.com/TheLartians/CPM.cmake/raw/master/cmake/CPM.cmake
-         ${CMAKE_CURRENT_LIST_DIR}/CPM.cmake)
-endif()
-
-include(CPM)
+include(FetchContent)
+FetchContent_Declare(
+    CPM
+    GIT_REPOSITORY https://github.com/TheLartians/CPM.cmake
+    GIT_TAG master
+    GIT_SHALLOW True)
+FetchContent_MakeAvailable(CPM)
+include(${cpm_SOURCE_DIR}/cmake/CPM.cmake)
 
 CPMFindPackage(
     NAME jegp_cmake_modules
