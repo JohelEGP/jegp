@@ -13,9 +13,8 @@ include(JEGPFindDependencies)
 add_library(jegp INTERFACE)
 add_library(jegp::jegp ALIAS jegp)
 target_compile_features(jegp INTERFACE cxx_std_20)
-target_include_directories(
-    jegp INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-                   $<INSTALL_INTERFACE:include>)
+target_include_directories(jegp INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                          $<INSTALL_INTERFACE:include>)
 
 install(TARGETS jegp EXPORT jegp-targets)
 
@@ -31,9 +30,7 @@ install(
     EXPORT jegp-targets
     DESTINATION lib/cmake/jegp
     NAMESPACE jegp::)
-install(FILES cmake/jegp-config.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/jegp-config-version.cmake
-        DESTINATION lib/cmake/jegp)
+install(FILES cmake/jegp-config.cmake ${CMAKE_CURRENT_BINARY_DIR}/jegp-config-version.cmake DESTINATION lib/cmake/jegp)
 install(DIRECTORY include/ DESTINATION include)
 
 include(CTest)
