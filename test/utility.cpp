@@ -6,62 +6,28 @@
 
 // [hash.combine]
 
-namespace
-{
-struct X
-{
+struct X {
     int v;
 };
+struct Y { };
+struct Z { };
 
-struct Y
-{
+template <> struct std::hash<X> {
+    constexpr std::size_t operator()(X x) const noexcept { return x.v; }
 };
-
-struct Z
-{
+template <> struct std::hash<Y> {
+    std::size_t operator()(Y) const { return 0; }
 };
+template <> struct std::hash<Z> : std::hash<void> { };
 
-} // namespace
+template <class... Args> constexpr bool is_hash_combinable = requires { jegp::hash_combine(std::declval<Args>()...); };
 
-namespace std
-{
-template <>
-struct hash<X>
-{
-    constexpr std::size_t operator()(X x) const noexcept
-    {
-        return x.v;
-    }
-};
-
-template <>
-struct hash<Y>
-{
-    std::size_t operator()(Y) const
-    {
-        return 0;
-    }
-};
-
-template <>
-struct hash<Z> : hash<void>
-{
-};
-
-} // namespace std
-
-namespace
-{
-template <class... Args>
-constexpr bool is_hash_combinable = requires { jegp::hash_combine(std::declval<Args>()...); };
-
-constexpr void test_hash_combine()
-{
-    static_assert(!is_hash_combinable<>);
-    static_assert(!is_hash_combinable<int>);
-    static_assert(!is_hash_combinable<X>);
-    static_assert(!is_hash_combinable<Y>);
-    static_assert(!is_hash_combinable<Z>);
+constexpr void test_hash_combine() {
+    static_assert(not is_hash_combinable<>);
+    static_assert(not is_hash_combinable<int>);
+    static_assert(not is_hash_combinable<X>);
+    static_assert(not is_hash_combinable<Y>);
+    static_assert(not is_hash_combinable<Z>);
     static_assert(is_hash_combinable<int, int>);
     static_assert(is_hash_combinable<int, X>);
     static_assert(is_hash_combinable<X, int>);
@@ -69,19 +35,19 @@ constexpr void test_hash_combine()
     static_assert(is_hash_combinable<int, Y>);
     static_assert(is_hash_combinable<Y, int>);
     static_assert(is_hash_combinable<Y, Y>);
-    static_assert(!is_hash_combinable<int, Z>);
-    static_assert(!is_hash_combinable<Z, int>);
-    static_assert(!is_hash_combinable<Z, Z>);
+    static_assert(not is_hash_combinable<int, Z>);
+    static_assert(not is_hash_combinable<Z, int>);
+    static_assert(not is_hash_combinable<Z, Z>);
 
     static_assert(noexcept(jegp::hash_combine(0, 0)));
     static_assert(noexcept(jegp::hash_combine(0, X{})));
     static_assert(noexcept(jegp::hash_combine(X{}, 0)));
     static_assert(noexcept(jegp::hash_combine(X{}, X{})));
-    static_assert(!noexcept(jegp::hash_combine(0, Y{})));
-    static_assert(!noexcept(jegp::hash_combine(Y{}, 0)));
-    static_assert(!noexcept(jegp::hash_combine(Y{}, Y{})));
+    static_assert(not noexcept(jegp::hash_combine(0, Y{})));
+    static_assert(not noexcept(jegp::hash_combine(Y{}, 0)));
+    static_assert(not noexcept(jegp::hash_combine(Y{}, Y{})));
 
-    const X x[]{42, 17, -20};
+    const X x[]{17, 20, -23};
 
     std::size_t seed{0};
 
@@ -97,15 +63,15 @@ constexpr void test_hash_combine()
 
 // [static.downcast]
 
-template <class DerivedRef, class Base>
-constexpr bool is_static_downcastable = requires { jegp::static_downcast<DerivedRef>(std::declval<Base>()); };
+template <class DerivedRef, class Base> constexpr bool is_static_downcastable = requires {
+    jegp::static_downcast<DerivedRef>(std::declval<Base>());
+};
 
 template <class Derived, class Base, bool ExpectedToPass = true>
-    requires std::is_same_v<Derived, std::remove_cvref_t<Derived>> &&
-        std::is_same_v<Base, std::remove_cvref_t<Base>> &&
-        (!std::is_same_v<Derived, Base> && std::is_base_of_v<Base, Derived>)
-constexpr void assert_is_static_downcastable()
-{
+    requires(
+        std::is_same_v<Derived, std::remove_cvref_t<Derived>>and std::is_same_v<Base, std::remove_cvref_t<Base>> and
+        not std::is_same_v<Derived, Base> and std::is_base_of_v<Base, Derived>)
+constexpr void assert_is_static_downcastable() {
     auto ok = [](bool b) { return b == ExpectedToPass; };
 
     static_assert(ok(is_static_downcastable<Derived&, Base&>));
@@ -113,69 +79,42 @@ constexpr void assert_is_static_downcastable()
     static_assert(ok(is_static_downcastable<Derived&&, Base&>));
     static_assert(ok(is_static_downcastable<const Derived&&, Base&>));
 
-    static_assert(!is_static_downcastable<Derived&, const Base&>);
+    static_assert(not is_static_downcastable<Derived&, const Base&>);
     static_assert(ok(is_static_downcastable<const Derived&, const Base&>));
-    static_assert(!is_static_downcastable<Derived&&, const Base&>);
+    static_assert(not is_static_downcastable<Derived&&, const Base&>);
     static_assert(ok(is_static_downcastable<const Derived&&, const Base&>));
 
-    static_assert(!is_static_downcastable<Derived&, Base>);
-    static_assert(!is_static_downcastable<const Derived&, Base>);
+    static_assert(not is_static_downcastable<Derived&, Base>);
+    static_assert(not is_static_downcastable<const Derived&, Base>);
     static_assert(ok(is_static_downcastable<Derived&&, Base>));
     static_assert(ok(is_static_downcastable<const Derived&&, Base>));
 
-    static_assert(!is_static_downcastable<Derived&, const Base>);
-    static_assert(!is_static_downcastable<const Derived&, const Base>);
-    static_assert(!is_static_downcastable<Derived&&, const Base>);
+    static_assert(not is_static_downcastable<Derived&, const Base>);
+    static_assert(not is_static_downcastable<const Derived&, const Base>);
+    static_assert(not is_static_downcastable<Derived&&, const Base>);
     static_assert(ok(is_static_downcastable<const Derived&&, const Base>));
 
-    static_assert(!is_static_downcastable<Derived, Base&>);
-    static_assert(!is_static_downcastable<Derived, const Base&>);
-    static_assert(!is_static_downcastable<Derived, Base>);
-    static_assert(!is_static_downcastable<Derived, const Base>);
+    static_assert(not is_static_downcastable<Derived, Base&>);
+    static_assert(not is_static_downcastable<Derived, const Base&>);
+    static_assert(not is_static_downcastable<Derived, Base>);
+    static_assert(not is_static_downcastable<Derived, const Base>);
 }
 
-constexpr void test_static_downcast()
-{
-    struct B
-    {
-    };
-
-    struct D : B
-    {
-    };
-
+constexpr void test_static_downcast() {
+    struct B { };
+    struct D : B { };
+    struct D2 : private B { };
+    struct D3 : D, B { };
+    struct D4 : virtual B { };
     assert_is_static_downcastable<D, B>();
-
-    struct D2 : private B
-    {
-    };
-
     assert_is_static_downcastable<D2, B, false>();
-
-    struct D3 : D, B
-    {
-    };
-
     assert_is_static_downcastable<D3, B, false>();
-
-    struct D4 : virtual B
-    {
-    };
-
     assert_is_static_downcastable<D4, B, false>();
 }
 
-constexpr int test()
-{
+consteval void test() {
     test_hash_combine();
     test_static_downcast();
-    return 0;
 }
 
-} // namespace
-
-int main()
-{
-    constexpr int ret{test()};
-    return ret;
-}
+int main() { test(); }
