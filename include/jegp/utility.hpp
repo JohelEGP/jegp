@@ -9,14 +9,14 @@
 
 namespace jegp {
 
-template <class Enum> constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept //
+template <class Enum> [[nodiscard]] constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept //
 {
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
 
 template <class... Args>
     requires(sizeof...(Args) >= 2)
-constexpr auto hash_combine(const Args&... args) noexcept(noexcept((..., std::hash<Args>{}(args))))
+[[nodiscard]] constexpr auto hash_combine(const Args&... args) noexcept(noexcept((..., std::hash<Args>{}(args))))
     -> decltype((..., std::hash<Args>{}(args))) //
 {
     std::size_t seed{0};
@@ -28,7 +28,8 @@ template <class DerivedRef, class Base>
         std::is_reference_v<DerivedRef> and
         not std::is_same_v<std::remove_cvref_t<DerivedRef>, std::remove_cvref_t<Base>> and
         std::derived_from<std::remove_reference_t<DerivedRef>, std::remove_reference_t<Base>>)
-constexpr auto static_downcast(Base&& b) noexcept -> decltype(static_cast<DerivedRef>(std::forward<Base>(b))) {
+[[nodiscard]] constexpr auto static_downcast(Base&& b) noexcept
+    -> decltype(static_cast<DerivedRef>(std::forward<Base>(b))) {
     return static_cast<DerivedRef>(std::forward<Base>(b));
 }
 
