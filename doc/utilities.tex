@@ -23,9 +23,9 @@ contains some basic constructs.
 \begin{codeblock}
 namespace jegp
 {
-// \ref{utility.underlying}, \tcode{underlying}
+// \ref{utility.underlying}, \tcode{to_underlying}
 template <class Enum>
-constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
+constexpr std::underlying_type_t<Enum> to_underlying(Enum e) noexcept;
 
 // \ref{static.downcast}, \tcode{static_downcast}
 template <class DerivedRef, class Base>
@@ -38,12 +38,12 @@ constexpr std::size_t hash_combine(const Args&... args) noexcept(@\seebelow@);
 } // namespace jegp
 \end{codeblock}
 
-\rSec2[utility.underlying]{\tcode{underlying}}
+\rSec2[utility.underlying]{\tcode{to_underlying}}
 
-\indexlibraryglobal{underlying}%
+\indexlibraryglobal{to_underlying}%
 \begin{itemdecl}
 template <class Enum>
-constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept;
+constexpr std::underlying_type_t<Enum> to_underlying(Enum e) noexcept;
 \end{itemdecl}
 
 \begin{itemdescr}

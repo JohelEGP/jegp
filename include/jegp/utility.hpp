@@ -9,7 +9,7 @@
 
 namespace jegp {
 
-template <class Enum> [[nodiscard]] constexpr std::underlying_type_t<Enum> underlying(Enum e) noexcept //
+template <class Enum> [[nodiscard]] constexpr std::underlying_type_t<Enum> to_underlying(Enum e) noexcept //
 {
     return static_cast<std::underlying_type_t<Enum>>(e);
 }
