@@ -23,8 +23,7 @@ if(JEGP_DOC_PDF)
         DEPENDEES copy-sources
         BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/jegp.pdf
         COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR>/source/ make quiet
-        COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/source/std.pdf
-                ${jegp_SOURCE_DIR}/doc/jegp/jegp.pdf)
+        COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/source/std.pdf ${jegp_SOURCE_DIR}/doc/jegp/jegp.pdf)
 endif()
 
 if(NOT JEGP_DOC_HTML)
@@ -34,8 +33,7 @@ endif()
 ExternalProject_Add_Step(
     draft-jegp copy-sources-back
     DEPENDEES copy-sources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/source/
-            ${CMAKE_CURRENT_SOURCE_DIR}/source/)
+    COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/source/ ${CMAKE_CURRENT_SOURCE_DIR}/source/)
 
 ExternalProject_Add(
     cxxdraft-htmlgen-jegp
@@ -55,11 +53,9 @@ ExternalProject_Add_Step(
     cxxdraft-htmlgen-jegp generate-html
     DEPENDEES update
     COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> stack build
-    COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> stack exec cxxdraft-htmlgen
-            ${jegp_SOURCE_DIR} ${JEGP_DOC_HTML})
+    COMMAND ${CMAKE_COMMAND} -E chdir <SOURCE_DIR> stack exec cxxdraft-htmlgen ${jegp_SOURCE_DIR} ${JEGP_DOC_HTML})
 
 ExternalProject_Add_Step(
     cxxdraft-htmlgen-jegp copy-html-back
     DEPENDEES generate-html
-    COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/14882/
-            ${CMAKE_CURRENT_SOURCE_DIR}/jegp/)
+    COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/14882/ ${CMAKE_CURRENT_SOURCE_DIR}/jegp/)
