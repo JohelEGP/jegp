@@ -1,4 +1,4 @@
-# Clang 11
+# Clang 12
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveAssignments: true
