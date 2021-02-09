@@ -1,0 +1,27 @@
+name: Test
+on:
+  push:
+    paths:
+      - "include/**.hpp"
+      - "test/**.cpp"
+  pull_request:
+    paths:
+      - "include/**.hpp"
+      - "test/**.cpp"
+jobs:
+  gcc-snapshot:
+    strategy:
+      matrix:
+        config: ["Debug", "Release"]
+    name: "GCC snapshot ${{ matrix.config }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lukka/get-cmake@latest
+      - uses: actions/checkout@v2
+      - uses: johelegp/gcc-snapshot@v1
+      - uses: johelegp/modern-cmake-buildsystem@v1
+        with:
+          generate-options: "--preset=test"
+        env:
+          CXXFLAGS: "-Wpedantic -Wall -Wextra"
+          CMAKE_CONFIG_TYPE: "${{ matrix.config }}"
