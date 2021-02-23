@@ -7,10 +7,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(CPM)
 include(${cpm_SOURCE_DIR}/cmake/CPM.cmake)
 
-CPMFindPackage(
-    NAME jegp_cmake_modules
-    GITHUB_REPOSITORY johelegp/jegp.cmake_modules
-    GIT_TAG master
-    GIT_SHALLOW True)
+CPMAddPackage("gh:johelegp/jegp.cmake_modules#master")
 
-list(APPEND CMAKE_MODULE_PATH "${jegp_cmake_modules_SOURCE_DIR}")
+list(APPEND CMAKE_MODULE_PATH "${jegp.cmake_modules_SOURCE_DIR}")
