@@ -10,7 +10,6 @@ on:
       - "test/**.cpp"
 jobs:
   gcc-snapshot:
-    if: false
     strategy:
       matrix:
         config: ["Debug", "Release"]
@@ -27,6 +26,7 @@ jobs:
           CXXFLAGS: "-Wpedantic -Wall -Wextra"
           CMAKE_CONFIG_TYPE: "${{ matrix.config }}"
   clang:
+    if: false
     name: "Clang 12"
     runs-on: ubuntu-20.04
     steps:
